@@ -1,0 +1,69 @@
+<div mat-dialog-title>
+  <h1> Prompt Form</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFromSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Name" formControlName="name" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput placeholder="Description" formControlName="description" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Detail</mat-label>
+        <input matInput placeholder="Detail" formControlName="detail" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Creator</mat-label>
+        <input matInput placeholder="Creator" formControlName="creator">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Image Url</mat-label>
+        <input matInput placeholder="Image Url" formControlName="imageUrl" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput placeholder="Price" formControlName="price" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Price Sale</mat-label>
+        <input matInput placeholder="Price Sale" formControlName="priceSale">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <input matInput placeholder="Quantity" formControlName="quantity" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Categories</mat-label>
+        <mat-select formControlName="categories" multiple required [(value)]="defaultSelectedCategories" >
+          <mat-option *ngFor="let category of categoryList" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false"> Cancel </button>
+    <button mat-raised-button color="primary" type="submit"> {{data? 'Update':'Save'}} </button>
+  </div>
+</form>

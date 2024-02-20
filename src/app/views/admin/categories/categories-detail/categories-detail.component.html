@@ -1,0 +1,23 @@
+<div mat-dialog-title>
+  <h1> Category Form</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFromSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Category Name" formControlName="name" required>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>ImageUrl</mat-label>
+        <input matInput placeholder="ImageUrl" formControlName="imageUrl" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false"> Cancel </button>
+    <button mat-raised-button color="primary" type="submit"> {{data? 'Update':'Save'}} </button>
+  </div>
+</form>

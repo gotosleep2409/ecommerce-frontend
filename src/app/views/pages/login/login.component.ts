@@ -1,0 +1,42 @@
+import { Component } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
+import {LoginService} from "../../../services/login.service";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {CookieService} from "ngx-cookie-service";
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent {
+  loginForm: FormGroup;
+  constructor(private loginService: LoginService, private router: Router, private snackBar: MatSnackBar, private cookieService: CookieService) {
+    this.loginForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl('')
+    });
+  }
+
+  onSubmit() {
+    if(this.loginForm.valid){
+      this.loginService.login(this.loginForm.value).subscribe({
+        next: (val : any) => {
+          console.log(val)
+          if (val.accessToken) {
+            sessionStorage.setItem('user_info', JSON.stringify(val));
+            this.cookieService.set('access_token', val.accessToken, undefined, "/");
+            this.router.navigate(['/admin']);
+          } else {
+            this.snackBar.open("Invalid username or password!")
+          }
+        },
+        error: (err: any) => {
+          console.error(err)
+        }
+      })
+    }
+  }
+
+}
