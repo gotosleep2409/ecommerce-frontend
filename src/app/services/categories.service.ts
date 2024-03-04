@@ -29,4 +29,12 @@ export class CategoriesService {
   deleteCategory(id: number): Observable<any>{
     return this.http.delete(this.constantService.API_ENDPOINT + this.constantService.CATEGORIES + `/delete/${id}`)
   }
+
+  getListByCategoryId(id:number, page?: number, pageSize?: number){
+    const params = [
+      'page=' + page,
+      '&size=' + pageSize
+    ].join('');
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.CATEGORIES + `/${id}?` + params)
+  }
 }

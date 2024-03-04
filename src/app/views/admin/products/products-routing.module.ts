@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'list',
         component:ProductsListComponent,
         data: {
-          title: 'products'
+          title: 'list'
         }
       },
       {

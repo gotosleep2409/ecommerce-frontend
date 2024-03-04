@@ -23,11 +23,17 @@ export class LoginComponent {
     if(this.loginForm.valid){
       this.loginService.login(this.loginForm.value).subscribe({
         next: (val : any) => {
-          console.log(val)
+          console.log(val.user.role)
           if (val.accessToken) {
-            sessionStorage.setItem('user_info', JSON.stringify(val));
-            this.cookieService.set('access_token', val.accessToken, undefined, "/");
-            this.router.navigate(['/admin']);
+            if(val.user.role == 'ADMIN') {
+              sessionStorage.setItem('user_info', JSON.stringify(val))
+              this.cookieService.set('access_token', val.accessToken, undefined, "/")
+              this.router.navigate(['/admin'])
+            }
+            else {
+              sessionStorage.setItem('user_info', JSON.stringify(val))
+              this.router.navigate(['/home'])
+            }
           } else {
             this.snackBar.open("Invalid username or password!")
           }
@@ -37,6 +43,9 @@ export class LoginComponent {
         }
       })
     }
+  }
+  onClickRegister(){
+    this.router.navigate(['/register']);
   }
 
 }

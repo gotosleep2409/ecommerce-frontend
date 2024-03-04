@@ -38,6 +38,7 @@ export class ProductsActionComponent {
   totalPages: number = 0
   totalElements: number = 0
   defaultSelectedCategories : any
+  userName: string = ''
 
   constructor(private fb:FormBuilder,
               private productsService:ProductsService,
@@ -46,11 +47,17 @@ export class ProductsActionComponent {
               private snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    const userInfoString = sessionStorage.getItem('user_info')
+    if(userInfoString!= null){
+      const userInfo = JSON.parse(userInfoString)
+      this.userName = userInfo.user.name
+    }
+
     this.empForm = this.fb.group({
       name:'',
       description:'',
       detail:'',
-      creator:'',
+      creator:this.userName,
       imageUrl:'',
       price:'',
       priceSale:'',
@@ -60,6 +67,11 @@ export class ProductsActionComponent {
   }
 
   ngOnInit() {
+    const userInfoString = sessionStorage.getItem('user_info')
+    if(userInfoString!= null){
+      const userInfo = JSON.parse(userInfoString)
+      this.userName = userInfo.user.name
+    }
     if(this.data){
       this.defaultSelectedCategories = (this.data.categories as Category[]).map(obj => obj.id)
       this.empForm.patchValue({

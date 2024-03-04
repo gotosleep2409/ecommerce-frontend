@@ -1,0 +1,23 @@
+<br>
+<h1>{{categoryItem.name}}</h1>
+
+<div class="row">
+  <div class="col-md-3" *ngFor="let product of categoryItem.products">
+    <div class="card shadow-sm" style="width: 18rem;">
+      <img class="bd-placeholder-img card-img-top" style="object-fit: contain; height: 288px;" [src]="product.imageUrl"> <!-- Điều chỉnh kích thước ảnh -->
+      <div class="card-body text-center">
+        <p class="card-text">
+          <small> {{product.price | currency: 'VND'}}</small>
+        </p>
+        <p class="card-text">
+          <strong>{{product.name}}</strong>
+        </p>
+        <p class="card-text">{{product.description}}</p>
+        <div class="btn-group d-flex justify-content-center">
+          <button type="button" class="btn btn-sm btn-primary product-btn" style="border-radius: 10px;" (click)="addToCart(product)"> Add to Cart </button>
+          <button type="button" class="btn btn-sm btn-outline-secondary product-btn" style="border-radius: 10px; margin-left: 10px;"> View Details </button> <!-- Thêm margin-left cho nút button -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

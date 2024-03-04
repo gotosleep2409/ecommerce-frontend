@@ -1,0 +1,35 @@
+<!--
+<div *ngIf="cartItem.length === 0" class="alert alert-info"> No items added to Cart</div>
+
+<ul *ngIf="cartItem.length > 0" class="list-group">
+  <li class="list-group-item" *ngFor="let i of cartItem">
+    <app-cart-item [cartItem]="i"></app-cart-item>
+  </li>
+
+  <li class="list-group-item active">
+    <strong>Total: {{cartTotal | currency: 'VND'}}</strong>
+  </li>
+
+  <li class="list-group-item">
+    <button class="btn btn-primary" style="font-size: x-small"> Check Out</button>
+    <button class="btn btn-danger" style="font-size: x-small; margin-left: 10px" (click)="clearCart()"> Clear Cart</button>
+  </li>
+</ul>
+-->
+
+<div *ngIf="cartItem.length === 0" class="alert alert-info"> No items added to Cart</div>
+
+<ul *ngIf="cartItem.length > 0" class="list-group">
+  <li class="list-group-item" *ngFor="let i of cartItem">
+    <app-cart-item [cartItem]="i"></app-cart-item>
+  </li>
+
+  <li class="list-group-item">
+    <strong>Total: {{ calculateCartTotal() | currency: 'VND' }}</strong>
+  </li>
+
+  <li class="list-group-item">
+    <button class="btn btn-primary" style="font-size: x-small"> Check Out</button>
+    <button class="btn btn-danger" style="font-size: x-small; margin-left: 10px" (click)="clearCart()"> Clear Cart</button>
+  </li>
+</ul>

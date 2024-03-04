@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+  <h5 style="margin-left: 100px" class="my-0 mr-md-auto font-weight-normal">
+    <app-header></app-header>
+  </h5>
+
+  <nav class="d-inline-flex mt-2 mt-md-0 mx-auto fs-4" style="text-transform: uppercase">
+    <a class="me-3 py-2 text-decoration-none nav-link" href="#">Home</a>
+    <a class="me-3 py-2 text-decoration-none nav-link" href="#">Product</a>
+    <a class="me-3 py-2 text-decoration-none nav-link" href="#">Support</a>
+    <a class="py-2 text-decoration-none nav-link" href="#">Contact</a>
+  </nav>
+  <i class="fa" style="margin-left: 40px; font-size:24px" (click)="viewDetailCart()">&#xf07a;</i>
+  <span class='badge badge-warning' id='lblCartCount'> {{countCart}} </span>
+  <a style="margin-left: 40px; margin-right: 50px" class="btn btn-outline-primary" href="#">Sign up</a>
+</div>
+

@@ -1,0 +1,47 @@
+form {
+  max-width: 100%; /* Định kích thước tối đa của form */
+  margin: 0 auto; /* Canh giữa form */
+  padding: 20px; /* Khoảng cách lề bên trong form */
+  border: 1px solid #ccc; /* Định viền của form */
+  border-radius: 5px; /* Định viền cong */
+  background-color:  #1abc9c;; /* Màu nền của form */
+}
+
+h1 {
+  text-align: center;
+}
+
+.text-medium-emphasis {
+  text-align: center; /* Căn giữa văn bản */
+  color: #777; /* Màu văn bản */
+}
+
+.c-input-group {
+  margin-bottom: 20px; /* Khoảng cách giữa các input group */
+}
+
+input {
+  width: 80%; /* Độ rộng của input */
+  padding: 10px; /* Khoảng cách lề bên trong input */
+  border: 1px solid #ccc; /* Định viền của input */
+  border-radius: 5px; /* Định viền cong */
+}
+
+.d-grid {
+  text-align: center; /* Căn giữa nút đăng ký */
+}
+
+button {
+  width: 100%; /* Độ rộng của nút đăng ký */
+  padding: 10px; /* Khoảng cách lề bên trong nút đăng ký */
+  border: none; /* Loại bỏ viền của nút đăng ký */
+  border-radius: 5px; /* Định viền cong */
+  background-color: #28a745; /* Màu nền của nút đăng ký */
+  color: #fff; /* Màu văn bản của nút đăng ký */
+  cursor: pointer; /* Biểu tượng con trỏ khi di chuột qua nút đăng ký */
+}
+
+button:hover {
+  background-color: #218838; /* Màu nền của nút đăng ký khi di chuột qua */
+}
+

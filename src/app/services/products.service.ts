@@ -18,12 +18,10 @@ export class ProductsService {
   }
 
   addProduct(data: any): Observable<any> {
-    console.log(data)
     return this.http.post(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/create", data)
   }
 
   updateProduct(id: number, data: any): Observable<any>{
-    console.log(data)
     return this.http.put(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + `/update/${id}`, data)
   }
 

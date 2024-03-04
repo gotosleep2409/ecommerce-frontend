@@ -84,7 +84,7 @@ export class CategoriesListComponent implements OnInit {
           this.getList();
         },
         error: (err) => {
-          console.error('Error deleting prompt', err);
+          console.error('Error deleting category', err);
         }
       });
     }

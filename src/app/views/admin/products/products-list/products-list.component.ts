@@ -33,7 +33,6 @@ export class ProductsListComponent implements OnInit {
   getList(){
     this.productsService.getListByPage(this.currentPage, this.size).subscribe((response: any) => {
       this.productList = response.data.content
-      console.log(this.productList)
       this.totalPages = response.data.totalPages
       this.currentPage = response.data.number + 1
       this.size = response.data.size

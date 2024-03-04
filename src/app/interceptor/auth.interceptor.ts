@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private cookieService: CookieService, private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.indexOf('users/login') === -1) {
+    /*if (request.url.indexOf('users/login') === -1) {
       if ( this.cookieService.get('access_token') && !request.headers.get('Authorization')) {
         request = request.clone({
           setHeaders: {
@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
       } else {
         this.router.navigate(['/login']);
       }
-    }
+    }*/
     return next.handle(request);
   }
 }

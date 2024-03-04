@@ -1,0 +1,21 @@
+<!--<app-nav class="fixed-nav"></app-nav>-->
+<app-nav></app-nav>
+<app-banner></app-banner>
+<hr>
+<div class="cf-title-04">
+  <h1>Product Categories</h1>
+</div>
+
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col" *ngFor="let category of categoriesList">
+      <app-card-categories [categoryItem]="category"></app-card-categories>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <app-card-products *ngFor="let category of categoriesList" [categoryItem]="category"></app-card-products>
+  </div>
+</div>
+<app-footer></app-footer>

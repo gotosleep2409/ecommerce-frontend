@@ -7,6 +7,8 @@ import { Page500Component } from './views/pages/page500/page500.component';
 import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import {HomeComponent} from "./views/home/home/home.component";
+import {PrimaryPageComponent} from "./views/home/primary-page/primary-page.component";
+import {PageProductDetailComponent} from "./views/home/page-product-detail/page-product-detail.component";
 
 const routes: Routes = [
   {
@@ -35,6 +37,11 @@ const routes: Routes = [
         path: 'products',
         loadChildren: () =>
           import('./views/admin/products/products-routing.module').then((m) => m.ProductsRoutingModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./views/admin/users/users-routing.module').then((m) => m.UsersRoutingModule)
       },
       {
         path: 'base',
@@ -79,8 +86,29 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'home',
+    path: 'detail',
+    component: PageProductDetailComponent,
+    data: {
+      title: 'Home'
+    }
+  },
+  {
+    path: 'product',
     component: HomeComponent,
+    data: {
+      title: 'Home'
+    },
+    /*children: [
+      {
+        path: 'detail',
+        loadChildren: () =>
+          import('./views/home/page-product-detail/page-product-detail.module').then((m) => m.PageProductDetailModule)
+      },
+    ]*/
+  },
+  {
+    path: 'home',
+    component: PrimaryPageComponent,
     data: {
       title: 'Home'
     }

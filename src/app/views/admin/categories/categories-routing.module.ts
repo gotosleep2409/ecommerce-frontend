@@ -19,14 +19,14 @@ const routes: Routes = [
         path: 'list',
         component:CategoriesListComponent,
         data: {
-          title: 'categories'
+          title: 'list'
         }
       },
       {
         path: 'create',
         component: CategoriesDetailComponent,
         data: {
-          title: 'Add new category'
+          title: 'Detail'
         }
       }
     ]

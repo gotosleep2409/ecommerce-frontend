@@ -24,9 +24,7 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit{
     const userInfoString = sessionStorage.getItem('user_info')
     if(userInfoString!= null){
       const userInfo = JSON.parse(userInfoString)
-      console.log(userInfo)
       this.userName = userInfo.user.name
-      console.log(this.userName)
     }
   }
 
