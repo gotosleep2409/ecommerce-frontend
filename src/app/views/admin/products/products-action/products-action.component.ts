@@ -12,10 +12,11 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ProductsService} from "../../../../services/products.service";
 import {CategoriesService} from "../../../../services/categories.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatIconModule} from "@angular/material/icon";
 
 interface Category {
   id: number
@@ -26,7 +27,7 @@ interface Category {
 @Component({
   selector: 'app-products-action',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDialogActions, MatDialogContent, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, ReactiveFormsModule, MatDialogClose, MatDialogTitle],
+  imports: [CommonModule, MatButtonModule, MatDialogActions, MatDialogContent, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, ReactiveFormsModule, MatDialogClose, MatDialogTitle, FormsModule, MatIconModule],
   templateUrl: './products-action.component.html',
   styleUrl: './products-action.component.scss'
 })
@@ -39,7 +40,8 @@ export class ProductsActionComponent {
   totalElements: number = 0
   defaultSelectedCategories : any
   userName: string = ''
-
+  sizeQuantityMap: { size: string, quantity: number }[] = []
+  sizeOptions: string[] = ['S', 'M', 'L', 'XL']
   constructor(private fb:FormBuilder,
               private productsService:ProductsService,
               private categoriesService:CategoriesService,
@@ -62,8 +64,8 @@ export class ProductsActionComponent {
       price:'',
       priceSale:'',
       quantity:'',
-      categories: [[], Validators.required]
-    })
+      categories: [[], Validators.required],
+      sizeQuantityMap: this.fb.array([]) })
   }
 
   ngOnInit() {
@@ -72,8 +74,20 @@ export class ProductsActionComponent {
       const userInfo = JSON.parse(userInfoString)
       this.userName = userInfo.user.name
     }
+
     if(this.data){
       this.defaultSelectedCategories = (this.data.categories as Category[]).map(obj => obj.id)
+      const sizeQuantityArray = this.convertToSizeQuantityArray(this.data.sizeQuantityMap)
+      this.sizeQuantityMap = sizeQuantityArray
+
+      const sizeQuantityFormArray = this.empForm.get('sizeQuantityMap') as FormArray
+      sizeQuantityArray.forEach(sizeQuantity => {
+        sizeQuantityFormArray.push(this.fb.group({
+          size: [sizeQuantity.size, Validators.required],
+          quantity: [sizeQuantity.quantity, Validators.required]
+        }))
+      })
+
       this.empForm.patchValue({
           name: this.data.name,
           description: this.data.description,
@@ -83,9 +97,13 @@ export class ProductsActionComponent {
           price:this.data.price,
           quantity:this.data.quantity,
           categories: this.defaultSelectedCategories
-        })
+      })
     }
     this.getCategoryList()
+  }
+
+  convertToSizeQuantityArray(input) {
+    return Object.keys(input).map(key => ({ size: key, quantity: input[key] }))
   }
 
   getCategoryList(){
@@ -116,7 +134,6 @@ export class ProductsActionComponent {
       else {
         this.productsService.addProduct(this.empForm.value).subscribe({
           next: (val : any) => {
-            console.log(val)
             this.snackBar.open('Product added successfully')
             this.dialogRef.close(true)
 
@@ -129,4 +146,20 @@ export class ProductsActionComponent {
     }
   }
 
+  removeSizeQuantity(index: number) {
+    const sizeQuantityArray = this.empForm.get('sizeQuantityMap') as FormArray
+    sizeQuantityArray.removeAt(index)
+  }
+
+  addSizeQuantity() {
+    const sizeQuantityFormGroup = this.fb.group({
+      size: ['', Validators.required],
+      quantity: ['', Validators.required]
+    });
+    (this.empForm.get('sizeQuantityMap') as FormArray).push(sizeQuantityFormGroup)
+  }
+
+  get sizeQuantityControls() {
+    return (this.empForm.get('sizeQuantityMap') as FormArray).controls
+  }
 }

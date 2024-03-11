@@ -67,7 +67,7 @@ h1 {
 /* page structure */
 #w {
   display: block;
-  width: 600px;
+  width: 800px;
   margin: 0 auto;
 }
 
@@ -110,7 +110,7 @@ h1 {
   width: 175px;
 }
 #cart thead th.second {
-  width: 45px;
+  width: 230px;
 }
 #cart thead th.third {
   width: 230px;
@@ -119,7 +119,7 @@ h1 {
   width: 130px;
 }
 #cart thead th.fifth {
-  width: 20px;
+  width: 30px;
 }
 
 #cart tbody td {
@@ -232,4 +232,13 @@ td.checkout {
   -webkit-box-shadow: inset 0 1px 3px 1px rgba(0,0,0,0.25);
   -moz-box-shadow: inset 0 1px 3px 1px rgba(0,0,0,0.25);
   box-shadow: inset 0 1px 3px 1px rgba(0,0,0,0.25);
+}
+
+
+.size-quantity-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.size-quantity {
+  margin-right: 10px; /* Để tạo khoảng cách giữa các phần tử */
 }

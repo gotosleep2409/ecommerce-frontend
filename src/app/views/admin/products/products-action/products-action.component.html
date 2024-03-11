@@ -46,12 +46,6 @@
       </mat-form-field>
     </div>
     <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Quantity</mat-label>
-        <input matInput type="number" placeholder="Quantity" formControlName="quantity" required>
-      </mat-form-field>
-    </div>
-    <div class="row">
       <mat-form-field>
         <mat-label>Categories</mat-label>
         <mat-select formControlName="categories" multiple required [(value)]="defaultSelectedCategories" >
@@ -61,7 +55,31 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <div class="row" formArrayName="sizeQuantityMap">
+      <mat-label>Quantity</mat-label>
+      <hr>
+      <div class="row" *ngFor="let sizeQuantity of sizeQuantityControls; let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field appearance="outline">
+            <mat-label>Size</mat-label>
+            <mat-select formControlName="size" placeholder="Size">
+              <mat-option *ngFor="let option of sizeOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Quantity</mat-label>
+            <input matInput type="number" placeholder="Quantity" formControlName="quantity">
+          </mat-form-field>
+          <button mat-icon-button (click)="removeSizeQuantity(i)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-raised-button (click)="addSizeQuantity()">Add Size Quantity</button>
+    </div>
+
   </div>
+
   <div mat-dialog-actions>
     <button mat-raised-button [mat-dialog-close]="false"> Cancel </button>
     <button mat-raised-button color="primary" type="submit"> {{data? 'Update':'Save'}} </button>

@@ -1,3 +1,9 @@
-<div class="cart-item">
-  <span> {{cartItem.productName}} </span> x <span>{{cartItem.qty}}</span> : <strong>{{ cartItem.price * cartItem.qty | currency: 'VND'}}</strong>
-</div>
+<span> {{cartItem.productName}} </span> x <span>{{ getTotalQuantity(cartItem) }}</span>: <strong>{{ getTotalPrice(cartItem) | currency: 'VND' }}</strong>
+<br>
+<span> Chi tiết </span>
+<ul>
+  <li *ngFor="let size of cartItem.sizes">{{ size.size }} - Quantity: {{ size.quantity }}</li>
+</ul>
+
+
+

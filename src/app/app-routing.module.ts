@@ -8,7 +8,9 @@ import { LoginComponent } from './views/pages/login/login.component';
 import { RegisterComponent } from './views/pages/register/register.component';
 import {HomeComponent} from "./views/home/home/home.component";
 import {PrimaryPageComponent} from "./views/home/primary-page/primary-page.component";
-import {PageProductDetailComponent} from "./views/home/page-product-detail/page-product-detail.component";
+import {PageProductDetailComponent} from "./views/home/home/page-product-detail/page-product-detail.component";
+import {HomePageComponent} from "./views/home/home/home-page/home-page.component";
+import {CheckOutComponent} from "./views/home/check-out/check-out.component";
 
 const routes: Routes = [
   {
@@ -86,31 +88,36 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'detail',
-    component: PageProductDetailComponent,
-    data: {
-      title: 'Home'
-    }
-  },
-  {
     path: 'product',
     component: HomeComponent,
     data: {
       title: 'Home'
     },
-    /*children: [
+    children: [
+      {
+        path: 'all',
+        loadChildren: () =>
+          import('./views/home/home/home-page/home-page-routing.module').then((m) => m.HomePageRoutingModule)
+      },
       {
         path: 'detail',
         loadChildren: () =>
-          import('./views/home/page-product-detail/page-product-detail.module').then((m) => m.PageProductDetailModule)
+          import('./views/home/home/page-product-detail/page-product-detail-routing.module').then((m) => m.PageProductDetailRoutingModule)
       },
-    ]*/
+    ]
   },
   {
     path: 'home',
     component: PrimaryPageComponent,
     data: {
       title: 'Home'
+    }
+  },
+  {
+    path: 'checkout',
+    component: CheckOutComponent,
+    data: {
+      title: 'checkout'
     }
   },
   {

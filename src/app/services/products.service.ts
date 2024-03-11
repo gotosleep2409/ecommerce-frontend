@@ -18,14 +18,48 @@ export class ProductsService {
   }
 
   addProduct(data: any): Observable<any> {
-    return this.http.post(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/create", data)
+    const formattedData = {
+      name: data.name,
+      description: data.description,
+      creator : data.creator,
+      detail: data.detail,
+      imageUrl: data.imageUrl,
+      price:data.price,
+      priceSale: data.priceSale,
+      categories: data.categories,
+      sizeQuantityMap: data.sizeQuantityMap.reduce((acc: any, curr: any) => {
+        acc[curr.size] = curr.quantity
+        return acc
+      }, {})
+    }
+
+    return this.http.post(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/create", formattedData)
   }
 
   updateProduct(id: number, data: any): Observable<any>{
-    return this.http.put(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + `/update/${id}`, data)
+    const formattedData = {
+      name: data.name,
+      description: data.description,
+      creator : data.creator,
+      detail: data.detail,
+      imageUrl: data.imageUrl,
+      price:data.price,
+      priceSale: data.priceSale,
+      categories: data.categories,
+      sizeQuantityMap: data.sizeQuantityMap.reduce((acc: any, curr: any) => {
+        acc[curr.size] = curr.quantity
+        return acc
+      }, {})
+    }
+
+    return this.http.put(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + `/update/${id}`, formattedData)
   }
 
   deleteProduct(id: number): Observable<any>{
     return this.http.delete(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + `/delete/${id}`)
+  }
+
+  getProduct(id: number): Observable<any>{
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS +`/${id}`)
   }
 }

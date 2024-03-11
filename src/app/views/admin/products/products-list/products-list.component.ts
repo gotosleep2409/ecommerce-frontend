@@ -38,7 +38,7 @@ export class ProductsListComponent implements OnInit {
       this.size = response.data.size
       this.totalElements = response.data.totalElements
     }, (error: any) => {
-      console.log(error);
+      console.log(error)
     })
   }
   addNewProduct() {
@@ -61,7 +61,7 @@ export class ProductsListComponent implements OnInit {
     const dialogRef = this.dialog.open(ProductsActionComponent,{
       width: '600px',
       data,
-    });
+    })
     dialogRef.afterClosed().subscribe({
       next:(val) => {
         this.getList()
@@ -70,14 +70,14 @@ export class ProductsListComponent implements OnInit {
   }
 
   deleteProduct(id: any) {
-    const isConfirmed = confirm('Are you sure you want to delete this product?');
+    const isConfirmed = confirm('Are you sure you want to delete this product?')
     if (isConfirmed) {
       this.productsService.deleteProduct(id).subscribe({
         next: (res) => {
-          this.getList();
+          this.getList()
         },
         error: (err) => {
-          console.error('Error deleting product', err);
+          console.error('Error deleting product', err)
         }
       });
     }

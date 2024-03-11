@@ -20,8 +20,8 @@
 <div *ngIf="cartItem.length === 0" class="alert alert-info"> No items added to Cart</div>
 
 <ul *ngIf="cartItem.length > 0" class="list-group">
-  <li class="list-group-item" *ngFor="let i of cartItem">
-    <app-cart-item [cartItem]="i"></app-cart-item>
+  <li class="list-group-item" *ngFor="let item of cartItem">
+    <app-cart-item [cartItem]="item"></app-cart-item>
   </li>
 
   <li class="list-group-item">

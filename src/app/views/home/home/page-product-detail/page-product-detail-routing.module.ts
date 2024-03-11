@@ -4,13 +4,10 @@ import {PageProductDetailComponent} from "./page-product-detail.component";
 
 const routes: Routes = [
   {
-    path: 'abc',
-    data: {
-      title: 'products'
-    },
+    path: '',
     children: [
       {
-        path: 'detail',
+        path: ':productId',
         component: PageProductDetailComponent,
         data: {
           title: 'Product Detail'

@@ -1,0 +1,15 @@
+<h4>Cart
+  <span class="price" style="color:black">
+    <i class="fa fa-shopping-cart"></i>
+    <b>{{ quantityCart() }}</b>
+  </span>
+</h4>
+<div *ngFor="let item of cartItem">
+  <span>{{ item.productName }}</span> <span class="price">{{ item.price | currency : 'VND' }}</span>
+  <ul>
+    <li *ngFor="let size of item.sizes">{{ size.size }} - Quantity: {{ size.quantity }}</li>
+  </ul>
+</div>
+
+<hr>
+<p>Total <span class="price" style="color:black"><b>{{calculateCartTotal() | currency : 'VND'}}</b></span></p>

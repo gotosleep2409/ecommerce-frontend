@@ -9,6 +9,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cart-item.component.scss'
 })
 export class CartItemComponent {
-  @Input() cartItem: any;
+  @Input() cartItem: any
+  getTotalQuantity(cartItem: any): number {
+    let totalQuantity = 0
+    for (let size of cartItem.sizes) {
+      totalQuantity += size.quantity
+    }
+    return totalQuantity
+  }
 
+  getTotalPrice(cartItem: any): number {
+    return cartItem.price * this.getTotalQuantity(cartItem)
+  }
 }

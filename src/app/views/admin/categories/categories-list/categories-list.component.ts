@@ -32,10 +32,10 @@ export class CategoriesListComponent implements OnInit {
 
   getList() {
     //Lấy thông tin của user từ Session
-    /*const userInfoString = sessionStorage.getItem('user_info');
+    /*const userInfoString = sessionStorage.getItem('user_info')
     if(userInfoString!= null){
-      const userInfo = JSON.parse(userInfoString);
-      console.log(userInfo.user.name);
+      const userInfo = JSON.parse(userInfoString)
+      console.log(userInfo.user.name)
     }*/
     this.categoriesService.getListByPage(this.currentPage, this.size).subscribe((response: any) => {
       this.categoriesList = response.data.content
@@ -81,10 +81,10 @@ export class CategoriesListComponent implements OnInit {
     if (isConfirmed) {
       this.categoriesService.deleteCategory(id).subscribe({
         next: (res) => {
-          this.getList();
+          this.getList()
         },
         error: (err) => {
-          console.error('Error deleting category', err);
+          console.error('Error deleting category', err)
         }
       });
     }

@@ -1,32 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CartItemComponent} from "./cart-item/cart-item.component";
-import {CartService} from "../../../../../services/cart.service";
 import {Subscription} from "rxjs";
+import {CartService} from "../../../../services/cart.service";
 
 @Component({
-  selector: 'app-cart',
+  selector: 'app-cart-info',
   standalone: true,
-  imports: [CommonModule, CartItemComponent],
-  templateUrl: './cart.component.html',
-  styleUrl: './cart.component.scss'
+  imports: [CommonModule],
+  templateUrl: './cart-info.component.html',
+  styleUrl: './cart-info.component.scss'
 })
-export class CartComponent implements OnInit{
+export class CartInfoComponent implements OnInit{
   cartItem = []
   cartSubscription: Subscription
   constructor(private cartService: CartService) {
   }
+
   ngOnInit() {
     this.cartSubscription = this.cartService.getCartItem().subscribe(items => {
       this.cartItem = items
     })
+
   }
 
-  clearCart() {
-    this.cartService.clearCart();
+  quantityCart(){
+    return this.cartService.countCart()
   }
-
   calculateCartTotal() {
     return this.cartService.cartTotal
   }
+
 }

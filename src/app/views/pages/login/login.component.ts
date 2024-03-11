@@ -23,7 +23,6 @@ export class LoginComponent {
     if(this.loginForm.valid){
       this.loginService.login(this.loginForm.value).subscribe({
         next: (val : any) => {
-          console.log(val.user.role)
           if (val.accessToken) {
             if(val.user.role == 'ADMIN') {
               sessionStorage.setItem('user_info', JSON.stringify(val))

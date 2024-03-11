@@ -4,12 +4,14 @@ import {CartService} from "../../../../services/cart.service";
 import {CategoriesDetailComponent} from "../../../admin/categories/categories-detail/categories-detail.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartDetailComponent} from "./cart-detail/cart-detail.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-nav',
   standalone: true,
   imports: [
-    HeaderComponent
+    HeaderComponent,
+    RouterLink
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
@@ -27,17 +29,6 @@ export class NavComponent implements OnInit{
     })
   }
 
-  /*viewDetailCart() {
-    const dialogRef = this.dialog.open(CartDetailComponent, {
-      width: '600px',
-    });
-    dialogRef.afterClosed().subscribe({
-      next:(val) => {
-
-      }
-    })
-  }*/
-
   viewDetailCart() {
     if (this.dialogRef) {
       this.dialogRef.close()
@@ -46,7 +37,7 @@ export class NavComponent implements OnInit{
     }
 
     this.dialogRef = this.dialog.open(CartDetailComponent, {
-      width: '600px',
+      width: '800px',
     });
 
     this.dialogRef.afterClosed().subscribe({

@@ -1,0 +1,97 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+
+<div class="container" style="margin-top: 150px">
+  <div class="card">
+    <div class="container-fliud">
+      <div class="wrapper row">
+        <div class="preview col-md-6">
+
+          <div class="preview-pic tab-content">
+            <div class="tab-pane active" id="pic-1"><img src="{{productItem.imageUrl}}" /></div>
+            <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
+            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
+            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+          </div>
+          <!--<ul class="preview-thumbnail nav nav-tabs">
+            <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+            <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+            <li><a data-target="#pic-3" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+            <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+            <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+          </ul>-->
+
+        </div>
+        <div class="details col-md-6">
+          <h3 class="product-title">{{productItem.name}}</h3>
+          <div class="rating">
+            <div class="stars">
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>
+            <span class="review-no">41 reviews</span>
+          </div>
+          <p class="product-description">{{productItem.description}}</p>
+          <h4 class="price">current price: <span>{{productItem.price | currency: 'VND'}}</span></h4>
+          <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+
+          <h5 class="sizes">sizes:
+            <span class="size" *ngFor="let item of productSizesWithQuantity" data-toggle="tooltip"
+                  [title]="item.quantity" (click)="onSizeClick(item)"
+                  [ngClass]="{'selected': item.size === selectedSize }">
+              {{ item.size }}
+            </span>
+          </h5>
+          <div *ngIf="quantityVisible">
+            <ng-container *ngIf="selectedQuantity > 0; else outOfStock" >
+              <span style="color: green; font-size: large">Còn hàng</span>
+            </ng-container>
+            <ng-template #outOfStock>
+              <span style="color: red; font-size: large">Hết hàng</span>
+            </ng-template>
+          </div>
+          <div class="quantity-input">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" [(ngModel)]="quantity" required class="custom-input">
+          </div>
+          <hr>
+          <!--<h5 class="colors">colors:
+            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+            <span class="color green"></span>
+            <span class="color blue"></span>
+          </h5>-->
+          <div class="action">
+            <button class="add-to-cart btn btn-default" type="button" (click)="addToCart(productItem, selectedSize,quantity)">add to cart</button>
+            <button style="margin-left: 10px" class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+          </div>
+          <hr>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Size Chart
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <img src="https://file.hstatic.net/200000580329/file/bang_sz_a09e0c9c6b504415a1e68dfbd4d0ab5e_grande.png">
+          </mat-expansion-panel>
+        </div>
+      </div>
+      <hr>
+      <mat-tab-group>
+        <mat-tab label="Details">
+          {{productItem.detail}}
+        </mat-tab>
+        <mat-tab label="Related to">
+          Content 2
+        </mat-tab>
+        <mat-tab label="Reviews(0)">
+          Content 3
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

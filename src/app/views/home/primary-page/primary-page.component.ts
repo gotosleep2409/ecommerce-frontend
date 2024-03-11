@@ -26,7 +26,7 @@ export class PrimaryPageComponent implements OnInit{
     this.categoriesService.getListByPage(1, 3).subscribe((response: any) => {
       this.categoriesList = response.data.content
     }, (error: any) => {
-      console.log(error);
+      console.log(error)
     })
   }
 }

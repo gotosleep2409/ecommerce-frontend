@@ -1,4 +1,4 @@
-<div class="card shadow-sm">
+<div class="card shadow-sm" style="margin-bottom: 20px">
   <img class="bd-placeholder-img card-img-top" style="object-fit: contain" width="262px" height="262px" [src]="productItem.imageUrl">
   <div class="card-body">
     <p class="card-text">
@@ -10,7 +10,7 @@
     <p class="card-text">{{productItem.description}}</p>
     <div class="d-flex justify-content-between align-items-center">
       <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-primary product-btn" (click)="addToCart()" style="border-radius: 10px;">Add to Cart</button>
+        <button type="button" class="btn btn-sm btn-primary product-btn" (click)="addToCart(productItem)" style="border-radius: 10px;">Add to Cart</button>
         <button type="button" class="btn btn-sm btn-outline-secondary product-btn" style="border-radius: 10px; margin-left: 30px">View Details</button>
       </div>
     </div>
