@@ -45,7 +45,11 @@
               <img src="{{item.imageUrl}}" style="max-width: 60px; height: auto; margin-right: 5px" class="img-responsive img-thumbnail">
             </td>
             <td>{{item.price}}</td>
-            <td>{{item.quantity}}</td>
+            <td>
+              <p *ngFor="let size of Object.entries(item.sizeQuantityMap)">
+                {{ size[0] }}: {{ size[1] }}
+              </p>
+            </td>
             <td>
               <p *ngFor="let category of item.categories">{{category.name}}</p>
             </td>
