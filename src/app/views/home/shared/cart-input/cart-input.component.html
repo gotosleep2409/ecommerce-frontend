@@ -7,28 +7,6 @@
       <img src="{{data.imageUrl}}" style="width: 200px">
     </div>
     <br>
-    <!--<mat-form-field>
-      <mat-label>Select Size</mat-label>
-      <mat-select [(value)]="selectedSize">
-        <mat-option *ngFor="let sizeQuantity of productSizesWithQuantity" [value]="sizeQuantity.size">
-          {{ sizeQuantity.size }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div *ngIf="selectedSize && !isOutOfStock(selectedSize)">
-      <span style="color: green; font-size: large">Còn hàng</span>
-    </div>
-    <div *ngIf="selectedSize && isOutOfStock(selectedSize)">
-      <span style="color: red; font-size: large">Hết hàng</span>
-    </div>
-
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Quantity</mat-label>
-        <input type="number" matInput placeholder="Quantity" formControlName="quantity" required>
-      </mat-form-field>
-    </div>-->
 
     <div class="row">
       <mat-form-field appearance="outline">
@@ -58,6 +36,6 @@
   </div>
   <div mat-dialog-actions>
     <button mat-raised-button [mat-dialog-close]="false"> Cancel </button>
-    <button mat-raised-button color="primary" type="submit"> {{data? 'Update':'Save'}} </button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="isQuantityGreaterThanStock()"> {{data? 'Update':'Save'}} </button>
   </div>
 </form>

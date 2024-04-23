@@ -52,4 +52,10 @@ export class CartInputComponent implements OnInit{
     return selectedSizeQuantity && selectedSizeQuantity.quantity === 0
   }
 
+  isQuantityGreaterThanStock(): boolean {
+    const quantity = this.empForm.get('quantity').value;
+    const selectedSizeQuantity = this.productSizesWithQuantity.find(size => size.size === this.selectedSize)?.quantity;
+    return !quantity || (quantity > selectedSizeQuantity);
+  }
+
 }

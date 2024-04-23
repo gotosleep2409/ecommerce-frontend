@@ -1,44 +1,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<form action="/action_page.php">
-  <div class="row">
-    <div class="col-50">
-      <h3>Billing Address</h3>
-      <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-      <label for="email"><i class="fa fa-envelope"></i> Email</label>
-      <input type="text" id="email" name="email" placeholder="john@example.com">
-      <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-      <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-      <label for="phone"><i class="fa fa-phone"></i> Phone</label>
-      <input type="text" id="phone" name="phone" placeholder="0123456789">
+<div *ngIf="paymentStatus == 'Fail' ; else successMessage">
+  <h1> Thanh toán thất bại! </h1>
+</div>
 
-      <!--<div class="row">
-        <div class="col-50">
-          <label for="state">State</label>
-          <input type="text" id="state" name="state" placeholder="NY">
+<ng-template #successMessage>
+  <form [formGroup]="empForm" (ngSubmit)="onFromSubmit()" action="">
+    <div class="row">
+      <div class="col-50">
+        <h3>Billing Address</h3>
+        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+        <input type="text" id="fname" formControlName="name" placeholder="John M. Doe">
+        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+        <input type="text" id="email" formControlName="email" placeholder="john@example.com">
+        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+        <input type="text" id="adr" formControlName="address" placeholder="542 W. 15th Street">
+        <label for="phone"><i class="fa fa-phone"></i> Phone</label>
+        <input type="text" id="phone" formControlName="phone" placeholder="0123456789">
+
+        <h3>Notes for Order</h3>
+        <mat-form-field class="example-full-width" style="width: 100%">
+          <mat-label>Notes for Order</mat-label>
+          <textarea formControlName="notes" matInput placeholder="Ex. Chỉ giao hàng vào giờ hành chính ..."></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="col-50">
+        <h3>Payment</h3>
+        <label for="fname">Payment method: {{paymentMethod}}</label>
+        <mat-form-field>
+          <mat-label>Select an option</mat-label>
+          <mat-select [(value)]="paymentMethod">
+            <mat-option value="COD">Cash On Delivery</mat-option>
+            <mat-option value="Bank transfer">Bank Transfer</mat-option>
+            <mat-option value="E-payment">E-payment</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="paymentMethod=='Bank transfer'">
+          <span> Message for transfer: Name + Phone </span>
+          <img style="width: 100%" src="./assets/img/banktransfer.jpg">
         </div>
-        <div class="col-50">
-          <label for="zip">Zip</label>
-          <input type="text" id="zip" name="zip" placeholder="10001">
-        </div>
-      </div>-->
-    </div>
-
-    <div class="col-50">
-      <h3>Notes for Order</h3>
-      <mat-form-field class="example-full-width" style="width: 100%">
-        <mat-label>Notes for Order</mat-label>
-        <textarea matInput placeholder="Ex. Chỉ giao hàng vào giờ hành chính ..."></textarea>
-      </mat-form-field>
-      <h3>Payment</h3>
-      <label for="fname">Payment method</label>
+      </div>
 
     </div>
-
-  </div>
-  <label>
-    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-  </label>
-  <input type="submit" value="Continue to checkout" class="btn">
-</form>
+    <label>
+      <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+    </label>
+    <input type="submit" value="Continue to checkout" class="btn">
+  </form>
+</ng-template>

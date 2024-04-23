@@ -9,11 +9,13 @@ export class ConstantService {
   CATEGORIES : string
   PRODUCTS: string
   USERS: string
+  BILLS: string
 
 
   constructor() {
     this.CATEGORIES = "categories"
     this.PRODUCTS = "products"
     this.USERS = "users"
+    this.BILLS = "bills"
   }
 }

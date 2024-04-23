@@ -1,0 +1,71 @@
+<app-nav></app-nav>
+
+<div class="container" *ngIf="billInfo; else noBill">
+  <div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+      Thank you. Your order has been received.
+    </div>
+
+    <ul class="list-group mb-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Date:
+        <strong>{{currentDate | date:'dd/MM/yyyy'}}</strong>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Email:
+        <strong>{{billInfo.email}}</strong>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Total:
+        <strong>{{billInfo.totalPrice | currency : 'VND'}}</strong>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Payment Method:
+        <strong>{{billInfo.paymentMethod }}</strong>
+      </li>
+    </ul>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Bill details</h5>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let i of billInfo.billDetails">
+            <tr>
+              <td>{{i.productName }}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <th scope="row">Payment Method:</th>
+            <td>{{billInfo.paymentMethod}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Total:</th>
+            <td>{{billInfo.totalPrice | currency : 'VND'}}</td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noBill>
+  <div class="container">
+    <h1>No orders are being displayed</h1>
+  </div>
+  <div style="margin-top: 400px">
+
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {provideRouter, RouterModule, Routes, withHashLocation} from '@angular/router';
 
 import { DefaultLayoutComponent } from './containers';
 import { Page404Component } from './views/pages/page404/page404.component';
@@ -11,11 +11,12 @@ import {PrimaryPageComponent} from "./views/home/primary-page/primary-page.compo
 import {PageProductDetailComponent} from "./views/home/home/page-product-detail/page-product-detail.component";
 import {HomePageComponent} from "./views/home/home/home-page/home-page.component";
 import {CheckOutComponent} from "./views/home/check-out/check-out.component";
+import {PaymentResultComponent} from "./views/home/payment-result/payment-result/payment-result.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -148,8 +149,14 @@ const routes: Routes = [
       title: 'Register Page'
     }
   },
-
-  {path: '**', redirectTo: 'login'}
+  {
+    path: 'paymentSuccess',
+    component: PaymentResultComponent,
+    data: {
+      title: 'Payment Result'
+    }
+  },
+  {path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
@@ -157,10 +164,14 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'top',
       anchorScrolling: 'enabled',
-      initialNavigation: 'enabledBlocking'
+      initialNavigation: 'enabledBlocking',
+      useHash: false
       // relativeLinkResolution: 'legacy'
     })
   ],
+  /*providers: [
+    provideRouter(routes, withHashLocation()),
+  ],*/
   exports: [RouterModule]
 })
 export class AppRoutingModule {

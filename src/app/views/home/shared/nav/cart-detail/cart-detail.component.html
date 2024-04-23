@@ -81,7 +81,7 @@
 
         <tr class="checkoutrow">
           <td colspan="5" class="checkout">
-            <button id="submitbtn">Check out</button>
+            <button (click)="checkOut()" [routerLink]= "['/checkout']" id="submitbtn">Check out</button>
           </td>
         </tr>
       </tbody>
