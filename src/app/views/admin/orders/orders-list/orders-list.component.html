@@ -2,11 +2,9 @@
   <div class="col-lg-12">
     <div class="card" style="min-width: 630px">
       <div class="card-header">
-        <i class="fa fa-align-justify"></i> List Category
+        <i class="fa fa-align-justify"></i> Orders
       </div>
       <div class="card-body" >
-        <button mat-raised-button color="primary" (click)="addNewCategory()" > Add new category </button>
-        <hr>
         <div class="row d-flex align-items-center px-4 flex-wrap justify-content-between border-bottom">
           <div class="col-lg-1 mb-3 d-flex align-items-center flex-shrink-1">
             <select id="page-size" class="form-control form-control-sm flex-shrink-1 ph-custom-select"
@@ -21,25 +19,29 @@
         <table class="table table-bordered table-responsive-sm table-hover table-outline" style="min-width: 550px">
           <thead>
           <tr>
-            <th class="headingTable" style="width: 20%">
-              <div>Id</div>
-            </th>
-            <th class="headingTable" style="width: 30%; vertical-align: top">Name</th>
-            <th class="headingTable">ImageUrl</th>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Payment Method</th>
+            <th>Payment Status</th>
+            <th>Status</th>
             <th>Action</th>
           </tr>
           </thead>
           <tbody>
           <tr
-            *ngFor="let item of categoriesList | paginate: { id: 'change-list-page', itemsPerPage: size, currentPage: currentPage, totalItems: totalElements}">
+            *ngFor="let item of ordersList | paginate: { id: 'change-list-page', itemsPerPage: size, currentPage: currentPage, totalItems: totalElements}">
             <td>{{item.id}}</td>
+            <td>{{item.code}}</td>
             <td>{{item.name}}</td>
-            <td style="text-align: center;">
-              <img src="{{item.imageUrl}}" style="max-width: 60px; height: auto; margin-right: 5px" class="img-responsive img-thumbnail">
-            </td>
+            <td>{{item.email}}</td>
+            <td>{{item.paymentMethod}}</td>
+            <td>{{item.paymentStatus}}</td>
+            <td>{{item.status}}</td>
             <td>
-              <button class="btn btn-primary" (click)="editNewCategory(item)"> Edit </button>
-              <button style="margin-left: 5px" class="btn btn-danger" (click)="deleteCategory(item.id)"> Delete </button>
+              <button class="btn btn-primary" (click)="editOrder(item)"> Edit </button>
+              <button style="margin-left: 5px" class="btn btn-danger" (click)="deleteOrder(item.id)"> Delete </button>
             </td>
           </tr>
           </tbody>

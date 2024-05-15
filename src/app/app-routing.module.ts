@@ -47,6 +47,11 @@ const routes: Routes = [
           import('./views/admin/users/users-routing.module').then((m) => m.UsersRoutingModule)
       },
       {
+        path: 'orders',
+        loadChildren: () =>
+          import('./views/admin/orders/orders-routing.module').then((m) => m.OrdersRoutingModule)
+      },
+      {
         path: 'base',
         loadChildren: () =>
           import('./views/base/base.module').then((m) => m.BaseModule)
