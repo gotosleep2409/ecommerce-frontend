@@ -89,7 +89,7 @@ const APP_CONTAINERS = [
     },
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy
+      useClass: PathLocationStrategy
     },
     {
       provide: HTTP_INTERCEPTORS,
