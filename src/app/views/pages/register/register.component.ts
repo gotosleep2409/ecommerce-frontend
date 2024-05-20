@@ -17,6 +17,8 @@ export class RegisterComponent {
     this.registerFrom = new FormGroup({
       name: new FormControl(''),
       username: new FormControl(''),
+      email: new FormControl(''),
+      phone: new FormControl(''),
       password: new FormControl(''),
       passwordRepeat: new FormControl('')
     });

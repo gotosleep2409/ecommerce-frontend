@@ -1,0 +1,46 @@
+<div mat-dialog-title style="text-align: center">
+  <h1> Hồ sơ cá nhân </h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFromSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" readonly>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input (change)="handleChanges()" matInput formControlName="name" required >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input (change)="handleChanges()" matInput formControlName="phone" required >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="email" (change)="handleChanges()" matInput formControlName="email" required >
+      </mat-form-field>
+    </div>
+    <div class="row" *ngIf="isChangePassword">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input (change)="handleChanges()" type="password" matInput formControlName="previousPassword" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>New Password</mat-label>
+        <input (change)="handleChanges()" type="password" matInput formControlName="newPassword" required>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false"> Cancel </button>
+    <button [disabled]="!handleChanges()" mat-raised-button color="primary" type="submit"> Save </button>
+    <button mat-raised-button (click)="changePassword()"> {{'Change Password'}} </button>
+  </div>
+</form>

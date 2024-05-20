@@ -5,13 +5,30 @@ import {CategoriesDetailComponent} from "../../../admin/categories/categories-de
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartDetailComponent} from "./cart-detail/cart-detail.component";
 import {RouterLink} from "@angular/router";
+import {TokenStorageService} from "../../../../services/token-storage.service";
+import {NgIf} from "@angular/common";
+import {
+  ButtonDirective,
+  DropdownComponent,
+  DropdownItemDirective,
+  DropdownMenuDirective,
+  DropdownToggleDirective
+} from "@coreui/angular";
+import {TransactionHistoryComponent} from "../header/transaction-history/transaction-history.component";
+import {DetailUserComponent} from "../header/detail-user/detail-user.component";
 
 @Component({
   selector: 'app-nav',
   standalone: true,
   imports: [
     HeaderComponent,
-    RouterLink
+    RouterLink,
+    NgIf,
+    DropdownComponent,
+    DropdownToggleDirective,
+    ButtonDirective,
+    DropdownMenuDirective,
+    DropdownItemDirective
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
@@ -19,11 +36,20 @@ import {RouterLink} from "@angular/router";
 export class NavComponent implements OnInit{
   countCart = 0
   dialogRef: MatDialogRef<CartDetailComponent> | null = null
+  isLoggedIn: any
+  role: any
+  username: any
 
-  constructor(private cartService : CartService, private dialog: MatDialog) {
+  constructor(private cartService : CartService, private dialog: MatDialog, private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit() {
+    this.isLoggedIn = !!this.tokenStorageService.getToken()
+    if(this.isLoggedIn){
+      const user = this.tokenStorageService.getUser()
+      this.role = user.role
+      this.username = user.username
+    }
     this.cartService.getCartItem().subscribe(res=>{
       this.countCart = res.length
     })
@@ -43,6 +69,31 @@ export class NavComponent implements OnInit{
     this.dialogRef.afterClosed().subscribe({
       next: (val) => {
         this.dialogRef = null;
+      }
+    })
+  }
+
+  logout() {
+    this.tokenStorageService.signOut()
+    window.location.reload()
+  }
+
+  viewDetailUser() {
+    const dialogRef = this.dialog.open(DetailUserComponent,{
+      width: '600px',
+    })
+    dialogRef.afterClosed().subscribe({
+      next:(val) => {
+      }
+    })
+  }
+
+  viewTransactionHistory() {
+    const dialogRef = this.dialog.open(TransactionHistoryComponent,{
+      width: '600px',
+    })
+    dialogRef.afterClosed().subscribe({
+      next:(val) => {
       }
     })
   }

@@ -25,4 +25,12 @@ export class UsersService {
   deleteUser(id: number): Observable<any>{
     return this.http.delete(this.constantService.API_ENDPOINT + this.constantService.USERS + `/delete/${id}`)
   }
+
+  changePassword(id:number, data: any){
+    return this.http.put(this.constantService.API_ENDPOINT + this.constantService.USERS + `/changePassword/${id}`, data)
+  }
+
+  getUserById(id:number){
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.USERS + `/${id}`)
+  }
 }

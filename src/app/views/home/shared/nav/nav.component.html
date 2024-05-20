@@ -13,6 +13,18 @@
   </nav>
   <i class="fa" style="margin-left: 40px; font-size:24px" (click)="viewDetailCart()">&#xf07a;</i>
   <span class='badge badge-warning' id='lblCartCount'> {{countCart}} </span>
-  <a style="margin-left: 40px; margin-right: 50px" class="btn btn-outline-primary" href="#">Sign up</a>
+  <a *ngIf="!isLoggedIn" style="margin-left: 40px; margin-right: 50px" class="btn btn-outline-primary" [routerLink]= "['/login']">Sign up</a>
+  <div *ngIf="isLoggedIn" style="margin-left: 40px; margin-right: 50px">
+    <c-dropdown>
+      <button cButton cDropdownToggle color="secondary" >
+        Chao xìn: {{username}}
+      </button>
+      <ul cDropdownMenu>
+        <li><button (click)="viewDetailUser()" cDropdownItem>Hồ sơ cá nhân</button></li>
+        <li><button (click)="viewTransactionHistory()" cDropdownItem>Lịch sử đơn hàng</button></li>
+        <li><button (click)="logout()" cDropdownItem>Log Out</button></li>
+      </ul>
+    </c-dropdown>
+  </div>
 </div>
 
