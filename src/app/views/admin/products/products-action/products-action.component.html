@@ -48,7 +48,7 @@
     <div class="row">
       <mat-form-field>
         <mat-label>Categories</mat-label>
-        <mat-select formControlName="categories" required [(value)]="defaultSelectedCategories" >
+        <mat-select formControlName="categories" multiple required [(value)]="defaultSelectedCategories" >
           <mat-option *ngFor="let category of categoryList" [value]="category.id">
             {{ category.name }}
           </mat-option>
