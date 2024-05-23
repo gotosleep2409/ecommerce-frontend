@@ -110,6 +110,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./views/home/home/page-product-detail/page-product-detail-routing.module').then((m) => m.PageProductDetailRoutingModule)
       },
+      {
+        path: ':categoryId',
+        loadChildren: () =>
+          import('./views/home/home/product-category/product-category-routing.module').then((m) => m.ProductCategoryRoutingModule)
+      },
     ]
   },
   {

@@ -9,12 +9,22 @@ import {Observable} from "rxjs";
 export class ProductsService {
   constructor(private constantService: ConstantService, private http: HttpClient) { }
 
-  getListByPage(page?: number, pageSize?: number){
-    const params = [
-      'page=' + page,
-      '&size=' + pageSize
-    ].join('');
-    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/list?" + params)
+  getListByPage(page?: number, pageSize?: number, categoryId? : any){
+    if(categoryId){
+      const params = [
+        'page=' + page,
+        '&size=' + pageSize,
+        '&categoryId=' + categoryId
+      ].join('')
+      return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/list?" + params)
+    }
+    else {
+      const params = [
+        'page=' + page,
+        '&size=' + pageSize
+      ].join('')
+      return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/list?" + params)
+    }
   }
 
   addProduct(data: any): Observable<any> {
