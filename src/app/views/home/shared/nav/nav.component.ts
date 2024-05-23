@@ -90,7 +90,7 @@ export class NavComponent implements OnInit{
 
   viewTransactionHistory() {
     const dialogRef = this.dialog.open(TransactionHistoryComponent,{
-      width: '600px',
+      width: '800px',
     })
     dialogRef.afterClosed().subscribe({
       next:(val) => {

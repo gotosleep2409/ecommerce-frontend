@@ -9,6 +9,7 @@ import {BillService} from "../../../../services/bill.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TokenStorageService} from "../../../../services/token-storage.service";
 @Component({
   selector: 'app-customer-info',
   standalone: true,
@@ -16,14 +17,18 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './customer-info.component.html',
   styleUrl: './customer-info.component.scss'
 })
+
 export class CustomerInfoComponent implements OnInit{
   paymentMethod: any
   private cartItem: any[]
   empForm: FormGroup
   paymentStatus: any
-  constructor(private router: Router, private snackBar: MatSnackBar,private cookieService: CookieService, private fb: FormBuilder, private cartService: CartService, private billService: BillService, private route: ActivatedRoute) {
+  isLoggedIn: any
+
+  constructor(private router: Router, private snackBar: MatSnackBar,private cookieService: CookieService, private fb: FormBuilder, private cartService: CartService, private billService: BillService, private route: ActivatedRoute, private tokenStorageService: TokenStorageService) {
   }
   ngOnInit() {
+    this.isLoggedIn = !!this.tokenStorageService.getToken()
     this.empForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -31,6 +36,10 @@ export class CustomerInfoComponent implements OnInit{
       phone: ['', Validators.required],
       notes: [''],
     });
+
+    if(this.isLoggedIn){
+      this.empForm.patchValue(this.tokenStorageService.getUser())
+    }
 
     this.cartService.cartItem.subscribe(items => {
       this.cartItem = items;
@@ -70,7 +79,8 @@ export class CustomerInfoComponent implements OnInit{
         notes: this.empForm.value.notes,
         paymentMethod: this.paymentMethod,
         billDetails: this.cartItem,
-        totalPrice: this.cartService.cartTotal
+        totalPrice: this.cartService.cartTotal,
+        userId: this.tokenStorageService.getUser()?.id ?? undefined
       }
       this.cookieService.set("cartInfo",JSON.stringify(data))
       if(this.paymentMethod == 'E-payment'){

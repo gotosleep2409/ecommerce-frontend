@@ -1,0 +1,37 @@
+<section class="intro">
+  <div class="gradient-custom-1 h-100">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <h2>Lịch sử đơn hàng</h2>
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="table-responsive bg-white">
+              <table class="table mb-0">
+                <thead>
+                <tr>
+                  <th scope="col">Code</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">PaymentMethod</th>
+                  <th scope="col">PaymentStatus</th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let i of transactionHistory">
+                    <th (click)="viewDetail(i.id)" scope="row" style="color: #666666;">{{i.code}}</th>
+                    <td>{{ i.name}}</td>
+                    <td>{{ i.paymentMethod }}</td>
+                    <td>{{ i.paymentStatus }}</td>
+                    <td>{{ i.totalAmount | currency : 'VND' }}</td>
+                    <td>{{ i.status }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

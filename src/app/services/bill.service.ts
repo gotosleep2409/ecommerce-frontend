@@ -37,4 +37,8 @@ export class BillService {
   updateBill(data: any, id: any): Observable<any> {
     return this.http.put(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/update/${id}` , data)
   }
+
+  getBillDetailByUserId(id: number) {
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/billByUserId/${id}`)
+  }
 }
