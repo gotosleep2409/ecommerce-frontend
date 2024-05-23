@@ -4,11 +4,12 @@ import {CartService} from "../../../../../../services/cart.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ProductsActionComponent} from "../../../../../admin/products/products-action/products-action.component";
 import {CartInputComponent} from "../../../../shared/cart-input/cart-input.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.scss'
 })

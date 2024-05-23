@@ -9,8 +9,8 @@
         <p class="card-text">
           <small> {{product.price | currency: 'VND'}}</small>
         </p>
-        <p class="card-text">
-          <strong>{{product.name}}</strong>
+        <p class="card-text" >
+          <a style="color: black; text-decoration: none" [routerLink]="['/product/detail/', product.id]"><strong>{{ product.name }}</strong></a>
         </p>
         <p class="card-text">{{product.description}}</p>
         <!--<div class="btn-group d-flex justify-content-center">
