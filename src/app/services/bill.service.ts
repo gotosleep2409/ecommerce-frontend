@@ -41,4 +41,8 @@ export class BillService {
   getBillDetailByUserId(id: number) {
     return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/billByUserId/${id}`)
   }
+
+  createReview(data: any){
+    return this.http.post(this.constantService.API_ENDPOINT + this.constantService.REVIEW + '/create', data)
+  }
 }

@@ -6,26 +6,63 @@
         <div class="row justify-content-center">
           <div class="col-12">
             <div class="table-responsive bg-white">
-              <table class="table mb-0">
+              <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th scope="col">Code</th>
                   <th scope="col">Name</th>
-                  <th scope="col">PaymentMethod</th>
-                  <th scope="col">PaymentStatus</th>
+                  <th scope="col">Payment Method</th>
+                  <th scope="col">Payment Status</th>
                   <th scope="col">Total</th>
                   <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let i of transactionHistory">
-                    <th (click)="viewDetail(i.id)" scope="row" style="color: #666666;">{{i.code}}</th>
-                    <td>{{ i.name}}</td>
-                    <td>{{ i.paymentMethod }}</td>
-                    <td>{{ i.paymentStatus }}</td>
-                    <td>{{ i.totalAmount | currency : 'VND' }}</td>
-                    <td>{{ i.status }}</td>
+                <ng-container *ngFor="let transaction of transactionHistory">
+                  <tr (click)="viewDetail(transaction)">
+                    <th scope="row" style="color: #666666;">{{ transaction.code }}</th>
+                    <td>{{ transaction.name }}</td>
+                    <td>{{ transaction.paymentMethod }}</td>
+                    <td>{{ transaction.paymentStatus }}</td>
+                    <td>{{ transaction.totalAmount | currency : 'VND' }}</td>
+                    <td>{{ transaction.status }}</td>
                   </tr>
+                  <ng-container *ngIf="transaction.expanded">
+                    <tr>
+                      <td colspan="6">
+                        <table class="table table-bordered">
+                          <thead>
+                          <tr>
+                            <th>Product Name</th>
+                            <th>Size</th>
+                            <th>Quantity</th>
+                            <th *ngIf="transaction.status === 'Đã giao hàng'"></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <ng-container *ngFor="let product of transaction.products">
+                            <ng-container *ngFor="let sq of product.sizeQuantity; let i = index">
+                              <tr>
+                                <td *ngIf="i === 0"
+                                    [attr.rowspan]="product.sizeQuantity.length">{{ product.productName }}
+                                </td>
+                                <td>{{ sq.size }}</td>
+                                <td>{{ sq.quantity }}</td>
+                                <ng-container *ngIf="transaction.status === 'Đã giao hàng' && i === 0">
+                                  <td [attr.rowspan]="product.sizeQuantity.length">
+                                    <button *ngIf="!product.reviewed" (click)="reviews(product.productId,transaction.id)">Đánh giá sản phẩm</button>
+                                    <span *ngIf="product.reviewed">Already Reviewed</span>
+                                  </td>
+                                </ng-container>
+                              </tr>
+                            </ng-container>
+                          </ng-container>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
                 </tbody>
               </table>
             </div>

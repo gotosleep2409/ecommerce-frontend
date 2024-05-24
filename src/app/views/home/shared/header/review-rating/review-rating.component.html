@@ -1,0 +1,17 @@
+<div class="container">
+  <p>Share your review:</p>
+  <div class="stars">
+    <fieldset class="rating">
+      <ng-container *ngFor="let star of stars; let i = index">
+        <input type="radio" [id]="'star' + (stars.length - i)" [name]="'rating'" [value]="stars.length - i" (click)="selectStar(stars.length - i - 1)" />
+        <label [for]="'star' + (stars.length - i)" [ngClass]="{'selected': star}" title="{{ stars.length - i }} stars"></label>
+      </ng-container>
+    </fieldset>
+  </div>
+  <div style="margin-top: 40px">
+    <br>
+    <textarea [(ngModel)]="review" placeholder="Write your review here"></textarea>
+    <button (click)="submitReview()">Submit</button>
+  </div>
+</div>
+
