@@ -9,11 +9,11 @@
         <div class="preview col-md-6">
 
           <div class="preview-pic tab-content">
-            <div class="tab-pane active" id="pic-1"><img src="{{productItem.imageUrl}}" /></div>
-            <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
-            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
-            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+            <div class="tab-pane active" id="pic-1"><img src="{{productItem.imageUrl}}"/></div>
+            <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252"/></div>
+            <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252"/></div>
+            <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252"/></div>
+            <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252"/></div>
           </div>
           <!--<ul class="preview-thumbnail nav nav-tabs">
             <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
@@ -25,19 +25,16 @@
 
         </div>
         <div class="details col-md-6">
-          <h3 class="product-title">{{productItem.name}}</h3>
+          <h3 class="product-title">{{ productItem.name }}</h3>
           <div class="rating">
-            <div class="stars">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
+            <div class="average-rating" style="font-size: 30px; margin-bottom: 5px">
+              <span *ngFor="let starType of getStarArray(calculateAverageRating())" [ngClass]="{'full': starType === 'full', 'half': starType === 'half', 'empty': starType === 'empty'}">&#9733;</span>
             </div>
-            <span class="review-no">41 reviews</span>
+            <h4>Average Rating: {{ calculateAverageRating() | number:'1.1-1' }} stars</h4>
+            <span class="review-no">{{productItem?.comments?.length}} reviews</span>
           </div>
-          <p class="product-description">{{productItem.description}}</p>
-          <h4 class="price">current price: <span>{{productItem.price | currency: 'VND'}}</span></h4>
+          <p style="font-size: 20px" class="product-description">{{ productItem.description }}</p>
+          <h4 class="price">current price: <span>{{ productItem.price | currency: 'VND' }}</span></h4>
           <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 
           <h5 class="sizes">sizes:
@@ -48,7 +45,7 @@
             </span>
           </h5>
           <div *ngIf="quantityVisible">
-            <ng-container *ngIf="selectedQuantity > 0; else outOfStock" >
+            <ng-container *ngIf="selectedQuantity > 0; else outOfStock">
               <span style="color: green; font-size: large">Còn hàng</span>
             </ng-container>
             <ng-template #outOfStock>
@@ -57,7 +54,8 @@
           </div>
           <div class="quantity-input">
             <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="1" [(ngModel)]="quantity" required class="custom-input">
+            <input type="number" id="quantity" name="quantity" min="1" [(ngModel)]="quantity" required
+                   class="custom-input">
           </div>
           <hr>
           <!--<h5 class="colors">colors:
@@ -66,8 +64,11 @@
             <span class="color blue"></span>
           </h5>-->
           <div class="action">
-            <button class="add-to-cart btn btn-default" type="button" (click)="addToCart(productItem, selectedSize,quantity)">add to cart</button>
-            <button style="margin-left: 10px" class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
+            <button class="add-to-cart btn btn-default" type="button"
+                    (click)="addToCart(productItem, selectedSize,quantity)">add to cart
+            </button>
+            <button style="margin-left: 10px" class="like btn btn-default" type="button"><span
+              class="fa fa-heart"></span></button>
           </div>
           <hr>
           <mat-expansion-panel hideToggle>
@@ -83,14 +84,28 @@
       <hr>
       <mat-tab-group>
         <mat-tab label="Details">
-          {{productItem.detail}}
+          {{ productItem.detail }}
         </mat-tab>
         <mat-tab label="Related to">
           Content 2
         </mat-tab>
-        <mat-tab label="Reviews(0)">
-          Content 3
+        <mat-tab label="Reviews({{productItem?.comments?.length}})">
+          <div *ngIf="productItem?.comments?.length">
+            <div *ngFor="let comment of productItem.comments" class="comment">
+              <div class="stars">
+                <ng-container *ngFor="let star of [].constructor(comment.rating); let i = index">
+                  <span class="star">&#9733;</span>
+                </ng-container>
+              </div>
+              <p>{{ comment.note }}</p>
+              <hr>
+            </div>
+          </div>
+          <div *ngIf="!productItem?.comments?.length">
+            <p>No reviews available.</p>
+          </div>
         </mat-tab>
+
       </mat-tab-group>
     </div>
   </div>

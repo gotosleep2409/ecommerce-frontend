@@ -192,3 +192,31 @@ img {
   box-shadow: 0 0 5px #007bff;
 }
 
+.stars {
+  color: gold;
+}
+
+.star {
+  font-size: 20px;
+}
+
+.full {
+  color: gold;
+}
+
+.half {
+  color: gold;
+  position: relative;
+}
+
+.half::after {
+  color: lightgray;
+  position: absolute;
+  left: 50%;
+  overflow: hidden;
+  width: 50%;
+}
+
+.empty {
+  color: lightgray;
+}

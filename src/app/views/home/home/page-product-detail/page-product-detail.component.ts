@@ -37,6 +37,7 @@ export class PageProductDetailComponent {
         if (this.productId != null) {
           this.productService.getProduct(Number(this.productId)).subscribe((value: any) => {
             this.productItem = value
+            console.log(this.productItem)
             this.productSizesWithQuantity = Object.keys(this.productItem.sizeQuantityMap).map(key => ({ size: key, quantity: this.productItem.sizeQuantityMap[key] }));
           })
         }
@@ -66,5 +67,24 @@ export class PageProductDetailComponent {
     else {
       return true
     }
+  }
+
+  calculateAverageRating(): number {
+    if (!this.productItem || !this.productItem.comments || this.productItem.comments.length === 0) {
+      return 0;
+    }
+    const sum = this.productItem.comments.reduce((acc, comment) => acc + comment.rating, 0);
+    return sum / this.productItem.comments.length;
+  }
+
+  getStarArray(rating: number): string[] {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+    return [
+      ...Array(fullStars).fill('full'),
+      ...Array(halfStar).fill('half'),
+      ...Array(emptyStars).fill('empty')
+    ];
   }
 }
