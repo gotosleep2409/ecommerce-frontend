@@ -4,6 +4,7 @@ import {TokenStorageService} from "../../../../../services/token-storage.service
 import {BillService} from "../../../../../services/bill.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ReviewRatingComponent} from "../review-rating/review-rating.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-transaction-history',
@@ -14,7 +15,7 @@ import {ReviewRatingComponent} from "../review-rating/review-rating.component";
 })
 export class TransactionHistoryComponent implements OnInit{
   transactionHistory : any
-  constructor(private tokenStorageService: TokenStorageService, private billService: BillService, private dialog: MatDialog) {
+  constructor(private tokenStorageService: TokenStorageService, private billService: BillService, private dialog: MatDialog, private snackBar: MatSnackBar,) {
   }
   ngOnInit() {
     this.billService.getBillDetailByUserId(this.tokenStorageService.getUser().id).subscribe((val: any) => {
@@ -42,6 +43,24 @@ export class TransactionHistoryComponent implements OnInit{
     dialogRef.afterClosed().subscribe({
       next:(val) => {
         this.ngOnInit()
+      }
+    })
+  }
+
+  cancelOrder(transaction: any) {
+    const data = {
+      id: transaction.id,
+      paymentMethod: transaction.paymentMethod,
+      paymentStatus: transaction.paymentStatus,
+      status: 'Đơn hàng hủy',
+      shoppingAddress: transaction.shoppingAddress
+    }
+    this.billService.updateBill(data, transaction.id).subscribe({
+      next: (val : any) => {
+        this.snackBar.open('Bill canceled successfully')
+      },
+      error: (err: any) => {
+        console.error(err)
       }
     })
   }

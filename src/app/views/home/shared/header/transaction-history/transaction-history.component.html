@@ -55,6 +55,11 @@
                                   </td>
                                 </ng-container>
                               </tr>
+                              <div *ngIf="transaction.status !== 'Đã giao hàng' && transaction.status !== 'Đơn hàng hủy'">
+                                <button (click)="cancelOrder(transaction)" type="button" class="btn btn-danger" style="margin: 5px">
+                                  Hủy đơn hàng
+                                </button>
+                              </div>
                             </ng-container>
                           </ng-container>
                           </tbody>

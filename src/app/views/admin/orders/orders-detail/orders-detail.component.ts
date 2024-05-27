@@ -25,7 +25,7 @@ import {MatButtonModule} from "@angular/material/button";
 export class OrdersDetailComponent implements OnInit{
   billDetail: any
   selectedPaymentMethod: any
-  statusList: string[] = ['Đang chuẩn bị hàng','Đã giao cho đơn vị vận chuyển','Đã giao hàng']
+  statusList: string[] = ['Đang chuẩn bị hàng','Đã giao cho đơn vị vận chuyển','Đã giao hàng','Đơn hàng hủy']
   paymentStatusList: string[] = ['Chờ thanh toán', 'Đã thanh toán','Chờ xác thực']
   empForm: FormGroup
   billProductDetail: any
@@ -78,7 +78,5 @@ export class OrdersDetailComponent implements OnInit{
       })
     }
   }
-
-
 }
 
