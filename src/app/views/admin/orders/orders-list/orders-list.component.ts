@@ -5,8 +5,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {NgxPaginationModule} from "ngx-pagination";
 import {BillService} from "../../../../services/bill.service";
 import {MatDialog} from "@angular/material/dialog";
-import {CategoriesDetailComponent} from "../../categories/categories-detail/categories-detail.component";
 import {OrdersDetailComponent} from "../orders-detail/orders-detail.component";
+
 
 @Component({
   selector: 'app-orders-list',
@@ -21,6 +21,9 @@ export class OrdersListComponent implements OnInit{
   size: number = 10
   totalPages: number = 0
   totalElements: number = 0
+  status: any = ''
+  paymentMethod: any = ''
+  paymentStatus: any = ''
 
   constructor(private billService : BillService, private dialog: MatDialog) {
   }
@@ -35,7 +38,7 @@ export class OrdersListComponent implements OnInit{
   }
 
   getList(){
-    this.billService.getOrderList(this.currentPage, this.size).subscribe((response: any) => {
+    this.billService.getOrderList(this.currentPage, this.size, this.paymentMethod, this.paymentStatus, this.status).subscribe((response: any) => {
       this.ordersList = response.data.content
       this.totalPages = response.data.totalPages
       this.currentPage = response.data.number + 1
@@ -70,5 +73,10 @@ export class OrdersListComponent implements OnInit{
         }
       });
     }
+  }
+
+  onSearchInputChanged() {
+    this.currentPage = 1
+    this.getList()
   }
 }

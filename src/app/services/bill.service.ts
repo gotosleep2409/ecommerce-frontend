@@ -18,10 +18,13 @@ export class BillService {
     return this.http.post(this.constantService.API_ENDPOINT + this.constantService.BILLS + "/vnpay", data)
   }
 
-  getOrderList(page?: number, pageSize?: number) {
+  getOrderList(page?: number, pageSize?: number, paymentMethod?: any, paymentStatus?: any, status?: any) {
     const params = [
       'page=' + page,
-      '&size=' + pageSize
+      '&size=' + pageSize,
+      '&paymentMethod=' + paymentMethod,
+      '&paymentStatus=' + paymentStatus,
+      '&status=' + status
     ].join('')
     return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + "/list?" + params)
   }

@@ -8,11 +8,36 @@
         <div class="row d-flex align-items-center px-4 flex-wrap justify-content-between border-bottom">
           <div class="col-lg-1 mb-3 d-flex align-items-center flex-shrink-1">
             <select id="page-size" class="form-control form-control-sm flex-shrink-1 ph-custom-select"
-                    [(ngModel)]="size" (change)="onPageChange(1)">
+                    [(ngModel)]="size" (change)="onPageChange(1)" style="width: 50px">
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="50">50</option>
+            </select>
+
+            <select  class="form-control-sm flex-shrink-1 ph-custom-select" style="margin-left: 5px; width: 500px"
+                     [(ngModel)]="status" (change)="onSearchInputChanged()">
+              <option value="">Filter By Status</option>
+              <option value="Đang chuẩn bị hàng">Đang chuẩn bị hàng</option>
+              <option value="Đã giao cho đơn vị vận chuyển">Đã giao cho đơn vị vận chuyển</option>
+              <option value="Đã giao hàng">Đã giao hàng</option>
+              <option value="Đơn hàng hủy">Đơn hàng hủy</option>
+            </select>
+
+            <select  class="form-control-sm flex-shrink-1 ph-custom-select" style="margin-left: 5px; width: 500px"
+                     [(ngModel)]="paymentMethod" (change)="onSearchInputChanged()">
+              <option value="">Filter By paymentMethod</option>
+              <option value="COD">COD</option>
+              <option value="Bank transfer">Bank transfer</option>
+              <option value="E-payment">E-payment</option>
+            </select>
+
+            <select  class="form-control-sm flex-shrink-1 ph-custom-select" style="margin-left: 5px; width: 500px"
+                     [(ngModel)]="paymentStatus" (change)="onSearchInputChanged()">
+              <option  value="">Filter By paymentStatus</option>
+              <option value="Chờ xác thực">Chờ xác thực</option>
+              <option value="Đã thanh toán">Đã thanh toán</option>
+              <option value="Chờ thanh toán">Chờ thanh toán</option>
             </select>
           </div>
         </div>
