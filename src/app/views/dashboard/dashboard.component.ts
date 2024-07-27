@@ -108,13 +108,32 @@ export class DashboardComponent implements OnInit {
   public mainChart: IChartProps = {};
   public chart: Array<IChartProps> = [];
   public trafficRadioGroup = new UntypedFormGroup({
-    trafficRadio: new UntypedFormControl('Month')
+    trafficRadio: new UntypedFormControl('Day')
   });
 
   ngOnInit(): void {
     this.initCharts();
   }
 
+  initCharts(): void {
+    this.mainChart = this.chartsData.mainChart;
+    /*this.setTrafficPeriod('day');*/
+  }
+
+  setTrafficPeriod(value: string): void {
+    this.mainChart = this.chartsData.mainChart;
+    this.trafficRadioGroup.setValue({ trafficRadio: value });
+    this.chartsData.initMainChartForDay(value);
+    this.initCharts();
+  }
+
+  setTrafficMonth(value: string): void {
+    this.trafficRadioGroup.setValue({ trafficRadio: value });
+    this.chartsData.initMainChartForMonth(value);
+    this.initCharts();
+  }
+
+  /*
   initCharts(): void {
     this.mainChart = this.chartsData.mainChart;
   }
@@ -124,4 +143,5 @@ export class DashboardComponent implements OnInit {
     this.chartsData.initMainChart(value);
     this.initCharts();
   }
+  */
 }

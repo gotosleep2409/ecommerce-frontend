@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/utils';
+import {DashboardService} from "../../services/dashboard.service";
 
 export interface IChartProps {
   data?: any;
@@ -16,7 +17,7 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class DashboardChartsData {
-  constructor() {
+  constructor(private dashboardService: DashboardService) {
     this.initMainChart();
   }
 
@@ -24,6 +25,241 @@ export class DashboardChartsData {
 
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  initMainChartForMonth(period: string = 'month'){
+    this.dashboardService.getDataChartForDashboard(period).subscribe((res: any) => {
+      const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
+      const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+      const brandInfoBg = hexToRgba(brandInfo, 10);
+      const brandDanger = getStyle('--cui-danger') || '#f86c6b';
+
+      const datasets = res.data.datasets.map((dataset: any, index: number) => {
+        const colors = [
+          {
+            backgroundColor: brandInfoBg,
+            borderColor: brandInfo,
+            pointHoverBackgroundColor: brandInfo,
+            borderWidth: 2,
+            fill: true
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandSuccess,
+            pointHoverBackgroundColor: '#fff'
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandDanger,
+            pointHoverBackgroundColor: brandDanger,
+            borderWidth: 1,
+            borderDash: [8, 5]
+          }
+        ];
+        return {
+          ...dataset,
+          ...colors[index]
+        };
+      });
+
+      /*const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function (context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };*/
+
+      /*const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: 10,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: Math.ceil(250 / 5)
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };*/
+
+      const allData = datasets.flatMap((dataset: any) => dataset.data);
+      const maxData = Math.max(...allData);
+      const stepSize = Math.ceil(maxData / 5);
+
+      const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function(context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };
+
+      const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: maxData + 5,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: stepSize
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };
+
+      this.mainChart.type = 'line';
+      this.mainChart.options = options;
+      this.mainChart.data = {
+        datasets,
+        labels: res.data.labels
+      }
+    })
+  }
+
+  initMainChartForDay(period: string = 'day'){
+    this.dashboardService.getDataChartForDashboard(period).subscribe((res: any) => {
+      const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
+      const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+      const brandInfoBg = hexToRgba(brandInfo, 10);
+      const brandDanger = getStyle('--cui-danger') || '#f86c6b';
+
+
+      const datasets = res.data.datasets.map((dataset: any, index: number) => {
+        const colors = [
+          {
+            backgroundColor: brandInfoBg,
+            borderColor: brandInfo,
+            pointHoverBackgroundColor: brandInfo,
+            borderWidth: 2,
+            fill: true
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandSuccess,
+            pointHoverBackgroundColor: '#fff'
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandDanger,
+            pointHoverBackgroundColor: brandDanger,
+            borderWidth: 1,
+            borderDash: [8, 5]
+          }
+        ];
+        return {
+          ...dataset,
+          ...colors[index]
+        };
+      });
+
+      const allData = datasets.flatMap((dataset: any) => dataset.data);
+      const maxData = Math.max(...allData);
+      const stepSize = Math.ceil(maxData / 5);
+
+      const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function(context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };
+
+      const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: maxData + 5,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: stepSize
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };
+
+      this.mainChart.type = 'line';
+      this.mainChart.options = options;
+      this.mainChart.data = {
+        datasets,
+        labels: res.data.labels
+      }
+    })
   }
 
   initMainChart(period: string = 'Month') {
@@ -40,41 +276,41 @@ export class DashboardChartsData {
     this.mainChart['Data3'] = [];
 
     // generate random values for mainChart
-    for (let i = 0; i <= this.mainChart['elements']; i++) {
-      this.mainChart['Data1'].push(this.random(50, 240));
-      this.mainChart['Data2'].push(this.random(20, 160));
-      this.mainChart['Data3'].push(65);
-    }
+      for (let i = 0; i <= this.mainChart['elements']; i++) {
+        this.mainChart['Data1'].push(this.random(50, 240));
+        this.mainChart['Data2'].push(this.random(20, 160));
+        this.mainChart['Data3'].push(65);
+      }
 
-    let labels: string[] = [];
-    if (period === 'Month') {
-      labels = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-      ];
-    } else {
-      /* tslint:disable:max-line-length */
-      const week = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ];
-      labels = week.concat(week, week, week);
-    }
+      let labels: string[] = [];
+      if (period === 'Month') {
+        labels = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
+        ];
+      } else {
+        /* tslint:disable:max-line-length */
+        const week = [
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday'
+        ];
+        labels = week.concat(week, week, week);
+      }
 
     const colors = [
       {
@@ -167,10 +403,19 @@ export class DashboardChartsData {
 
     this.mainChart.type = 'line';
     this.mainChart.options = options;
-    this.mainChart.data = {
-      datasets,
-      labels
-    };
+    this.dashboardService.getDataChartForDashboard(period).subscribe((res: any) => {
+      const labels = res.data.labels;
+      const datasetsFromApi = res.data.datasets;
+      this.mainChart.data = {
+        datasetsFromApi,
+        labels
+      };
+    })
+    /*this.mainChart.data = {
+          datasets,
+          labels
+        };*/
+    this.initMainChartForDay('day')
   }
 
 }
