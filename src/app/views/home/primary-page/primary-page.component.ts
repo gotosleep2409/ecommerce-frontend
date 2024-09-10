@@ -23,7 +23,7 @@ export class PrimaryPageComponent implements OnInit{
   }
 
   getList() {
-    this.categoriesService.getListByPage(1, 3).subscribe((response: any) => {
+    this.categoriesService.getListByPage(1, 10).subscribe((response: any) => {
       this.categoriesList = response.data.content
     }, (error: any) => {
       console.log(error)

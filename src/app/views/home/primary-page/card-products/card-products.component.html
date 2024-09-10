@@ -1,10 +1,10 @@
 <br>
 <h1>{{categoryItem.name}}</h1>
 
-<div class="row">
+<!--<div class="row">
   <div class="col-md-3" *ngFor="let product of categoryItem.products">
     <div class="card shadow-sm" style="width: 18rem;">
-      <img class="bd-placeholder-img card-img-top" style="object-fit: contain; height: 288px;" [src]="product.imageUrl"> <!-- Điều chỉnh kích thước ảnh -->
+      <img class="bd-placeholder-img card-img-top" style="object-fit: contain; height: 288px;" [src]="product.imageUrl"> &lt;!&ndash; Điều chỉnh kích thước ảnh &ndash;&gt;
       <div class="card-body text-center">
         <p class="card-text">
           <small> {{product.price | currency: 'VND'}}</small>
@@ -13,11 +13,43 @@
           <a style="color: black; text-decoration: none" [routerLink]="['/product/detail/', product.id]"><strong>{{ product.name }}</strong></a>
         </p>
         <p class="card-text">{{product.description}}</p>
-        <!--<div class="btn-group d-flex justify-content-center">
+        &lt;!&ndash;<div class="btn-group d-flex justify-content-center">
           <button type="button" class="btn btn-sm btn-primary product-btn" style="border-radius: 10px;" (click)="addToCart(product)"> Add to Cart </button>
           <button type="button" class="btn btn-sm btn-outline-secondary product-btn" style="border-radius: 10px; margin-left: 10px;"> View Details </button> &lt;!&ndash; Thêm margin-left cho nút button &ndash;&gt;
-        </div>-->
+        </div>&ndash;&gt;
+      </div>
+    </div>
+  </div>
+</div>-->
+
+<div *ngIf="categoryItem.products.length > 0; else noProducts">
+  <div class="row">
+    <div *ngFor="let product of categoryItem.products" class="col-md-3 mb-3">
+      <div class="card shadow-sm" style="width: 18rem;">
+        <img class="bd-placeholder-img card-img-top" [src]="product.imageUrl" style="object-fit: cover; height: 288px;" alt="{{product.name}}">
+        <div class="card-body text-center">
+          <p class="card-text">
+            <small> {{ product.price | currency: 'VND' }}</small>
+          </p>
+          <p class="card-text">
+            <a class="text-dark text-decoration-none" [routerLink]="['/product/detail/', product.id]">
+              <strong>{{ product.name }}</strong>
+            </a>
+          </p>
+          <p class="card-text">{{ product.description }}</p>
+          <div class="btn-group d-flex justify-content-center mt-2">
+            <button type="button" class="btn btn-sm btn-primary" (click)="addToCart(product)">Add to Cart</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary ml-2">View Details</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noProducts>
+  <div class="alert alert-info text-center" role="alert">
+    Không có mặt hàng phù hợp
+  </div>
+</ng-template>
+

@@ -8,7 +8,8 @@
 <div class="container">
   <br>
   <div class="row">
-    <div class="col" *ngFor="let category of categoriesList">
+    <div class="col" *ngFor="let category of categoriesList" class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3 text-center">
+    <!--<div class="col" *ngFor="let category of categoriesList" >-->
       <app-card-categories [categoryItem]="category"></app-card-categories>
     </div>
   </div>
