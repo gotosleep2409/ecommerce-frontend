@@ -26,6 +26,7 @@ export class LoginComponent {
         next: (val : any) => {
           if (val.accessToken) {
             this.tokenStorageService.saveToken(val.accessToken)
+            localStorage.setItem('token', val.accessToken);
             this.tokenStorageService.saveUser(val.user)
             if(val.user.role == 'ADMIN') {
               sessionStorage.setItem('user_info', JSON.stringify(val))

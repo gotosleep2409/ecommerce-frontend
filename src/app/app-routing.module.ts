@@ -12,6 +12,7 @@ import {PageProductDetailComponent} from "./views/home/home/page-product-detail/
 import {HomePageComponent} from "./views/home/home/home-page/home-page.component";
 import {CheckOutComponent} from "./views/home/check-out/check-out.component";
 import {PaymentResultComponent} from "./views/home/payment-result/payment-result/payment-result.component";
+import {AuthGuard} from "./interceptor/AuthGuard";
 
 const routes: Routes = [
   {
@@ -22,8 +23,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component: DefaultLayoutComponent,
+    canActivate:[AuthGuard],
     data: {
-      title: 'Home'
+      title: 'Home',
+      expectedRole:'ADMIN'
     },
     children: [
       {
