@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {ConstantService} from "./constant.service";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +72,24 @@ export class ProductsService {
 
   getProduct(id: number): Observable<any>{
     return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS +`/${id}`)
+  }
+
+  /*downloadExcel() {
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + '/export', { responseType: 'blob' }).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, 'products.xlsx');
+    });
+  }*/
+
+  downloadExcel() {
+    const fileName = prompt("Nhập tên file muốn lưu:", "products")
+
+    const finalFileName = fileName ? fileName : 'products report'
+
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + '/export', { responseType: 'blob' })
+      .subscribe((data) => {
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+        saveAs(blob, `${finalFileName}.xlsx`)
+      })
   }
 }

@@ -84,4 +84,8 @@ export class ProductsListComponent implements OnInit {
   }
 
   protected readonly Object = Object;
+
+  exportExcel() {
+    this.productsService.downloadExcel()
+  }
 }
