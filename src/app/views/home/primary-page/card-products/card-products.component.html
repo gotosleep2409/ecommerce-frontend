@@ -22,7 +22,7 @@
   </div>
 </div>-->
 
-<div *ngIf="categoryItem.products.length > 0; else noProducts">
+<div *ngIf="categoryItem?.products?.length > 0; else noProducts">
   <div class="row">
     <div *ngFor="let product of categoryItem.products" class="col-md-3 mb-3">
       <div class="card shadow-sm" style="width: 18rem;">
@@ -52,4 +52,6 @@
     Không có mặt hàng phù hợp
   </div>
 </ng-template>
+
+
 

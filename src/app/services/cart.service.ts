@@ -33,7 +33,8 @@ export class CartService {
         sizes: [{ size: size, quantity: quantity }],
         price: product.price,
         imageUrl: product.imageUrl,
-        quantity : quantity
+        quantity : quantity,
+        sizeQuantityMap : product.sizeQuantityMap
       }
       currentCartItems.push(newProduct)
     }

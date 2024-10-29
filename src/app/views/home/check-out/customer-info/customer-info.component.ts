@@ -36,7 +36,6 @@ export class CustomerInfoComponent implements OnInit{
       phone: ['', Validators.required],
       notes: [''],
     });
-
     if(this.isLoggedIn){
       this.empForm.patchValue(this.tokenStorageService.getUser())
     }
@@ -60,6 +59,11 @@ export class CustomerInfoComponent implements OnInit{
             });
           } else {
             console.log("Form is invalid");
+            this.billService.createBill(data).subscribe((value: any) => {
+              console.log(value);
+              this.router.navigate(['/paymentSuccess']);
+              this.cartService.clearCart();
+            });
           }
         } else {
           this.paymentStatus = "Fail";
@@ -70,33 +74,50 @@ export class CustomerInfoComponent implements OnInit{
 
 
   onFromSubmit() {
-    if(this.empForm.valid){
-      const data= {
-        name : this.empForm.value.name,
-        email : this.empForm.value.email,
-        address: this.empForm.value.address,
-        phone: this.empForm.value.phone,
-        notes: this.empForm.value.notes,
-        paymentMethod: this.paymentMethod,
-        billDetails: this.cartItem,
-        totalPrice: this.cartService.cartTotal,
-        userId: this.tokenStorageService.getUser()?.id ?? undefined
-      }
-      this.cookieService.set("cartInfo",JSON.stringify(data))
-      if(this.paymentMethod == 'E-payment'){
-        this.billService.vnPay(data).subscribe((value: any) => {
-          window.location.href = value.paymentUrl
-        })
-      }
-      else {
-        this.billService.createBill(data).subscribe((value: any) => {
-          this.router.navigate(['/paymentSuccess'])
-          this.cartService.clearCart()
-        })
+    let allItemsValid = true
+
+    for (let item of this.cartItem) {
+      let selectedSize = item.sizes[0].size
+      let selectedQuantity = item.sizes[0].quantity
+      let availableQuantity = item.sizeQuantityMap[selectedSize]
+
+
+      if (selectedQuantity > availableQuantity) {
+        alert(`Sản phẩm ${item.productName} không còn đủ trong kho với size ${selectedSize}`);
+        allItemsValid = false;
+        break;
       }
     }
-    else {
-      this.snackBar.open('Vui lòng nhập đủ thông tin')
+
+    if(allItemsValid){
+      if(this.empForm.valid){
+        const data= {
+          name : this.empForm.value.name,
+          email : this.empForm.value.email,
+          address: this.empForm.value.address,
+          phone: this.empForm.value.phone,
+          notes: this.empForm.value.notes,
+          paymentMethod: this.paymentMethod,
+          billDetails: this.cartItem,
+          totalPrice: this.cartService.cartTotal,
+          userId: this.tokenStorageService.getUser()?.id ?? undefined
+        }
+        this.cookieService.set("cartInfo",JSON.stringify(data))
+        if(this.paymentMethod == 'E-payment'){
+          this.billService.vnPay(data).subscribe((value: any) => {
+            window.location.href = value.paymentUrl
+          })
+        }
+        else {
+          this.billService.createBill(data).subscribe((value: any) => {
+            this.router.navigate(['/paymentSuccess'])
+            this.cartService.clearCart()
+          })
+        }
+      }
+      else {
+        this.snackBar.open('Vui lòng nhập đủ thông tin')
+      }
     }
   }
 }
