@@ -55,14 +55,14 @@ export class CustomerInfoComponent implements OnInit{
             this.billService.createBill(data).subscribe((value: any) => {
               console.log(value);
               this.router.navigate(['/paymentSuccess']);
-              this.cartService.clearCart();
+              /*this.cartService.clearCart();*/
             });
           } else {
             console.log("Form is invalid");
             this.billService.createBill(data).subscribe((value: any) => {
               console.log(value);
               this.router.navigate(['/paymentSuccess']);
-              this.cartService.clearCart();
+              /*this.cartService.clearCart();*/
             });
           }
         } else {
@@ -90,33 +90,41 @@ export class CustomerInfoComponent implements OnInit{
     }
 
     if(allItemsValid){
-      if(this.empForm.valid){
-        const data= {
-          name : this.empForm.value.name,
-          email : this.empForm.value.email,
-          address: this.empForm.value.address,
-          phone: this.empForm.value.phone,
-          notes: this.empForm.value.notes,
-          paymentMethod: this.paymentMethod,
-          billDetails: this.cartItem,
-          totalPrice: this.cartService.cartTotal,
-          userId: this.tokenStorageService.getUser()?.id ?? undefined
-        }
-        this.cookieService.set("cartInfo",JSON.stringify(data))
-        if(this.paymentMethod == 'E-payment'){
-          this.billService.vnPay(data).subscribe((value: any) => {
-            window.location.href = value.paymentUrl
-          })
-        }
-        else {
-          this.billService.createBill(data).subscribe((value: any) => {
-            this.router.navigate(['/paymentSuccess'])
-            this.cartService.clearCart()
-          })
-        }
+      if(this.cartItem.length === 0){
+        alert('Không có sản phẩm trong giỏ hàng. Bạn sẽ được điều hướng về trang chủ.');
+        this.router.navigate(['/home'])
       }
       else {
-        this.snackBar.open('Vui lòng nhập đủ thông tin')
+        if(this.empForm.valid){
+          const data= {
+            name : this.empForm.value.name,
+            email : this.empForm.value.email,
+            address: this.empForm.value.address,
+            phone: this.empForm.value.phone,
+            notes: this.empForm.value.notes,
+            paymentMethod: this.paymentMethod,
+            billDetails: this.cartItem,
+            totalPrice: this.cartService.cartTotal,
+            userId: this.tokenStorageService.getUser()?.id ?? undefined,
+            codeDiscount: this.cartService.cartDiscount.code,
+            discountedAmount:  ((this.cartService.cartTotal*this.cartService.cartDiscount.value)/(100-this.cartService.cartDiscount.value))
+          }
+          this.cookieService.set("cartInfo",JSON.stringify(data))
+          if(this.paymentMethod == 'E-payment'){
+            this.billService.vnPay(data).subscribe((value: any) => {
+              window.location.href = value.paymentUrl
+            })
+          }
+          else {
+            this.billService.createBill(data).subscribe((value: any) => {
+              this.router.navigate(['/paymentSuccess'])
+              /*this.cartService.clearCart()*/
+            })
+          }
+        }
+        else {
+          this.snackBar.open('Vui lòng nhập đủ thông tin')
+        }
       }
     }
   }

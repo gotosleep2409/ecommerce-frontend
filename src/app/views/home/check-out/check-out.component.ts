@@ -20,11 +20,11 @@ export class CheckOutComponent implements OnInit{
   constructor(private cartService: CartService, private router: Router) {
     this.cartService.getCartItem().subscribe(items => {
       this.cartItem = items
-
+/*
       if (this.cartItem.length === 0) {
         alert('Không có sản phẩm trong giỏ hàng. Bạn sẽ được điều hướng về trang chủ.');
         this.router.navigate(['/home'])
-      }
+      }*/
     });
   }
   ngOnInit() {

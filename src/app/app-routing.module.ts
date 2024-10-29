@@ -45,6 +45,11 @@ const routes: Routes = [
           import('./views/admin/products/products-routing.module').then((m) => m.ProductsRoutingModule)
       },
       {
+        path: 'discountCode',
+        loadChildren: () =>
+          import('./views/admin/discountCode/discountCode-routing.module').then((m) => m.DiscountCodeRoutingModule)
+      },
+      {
         path: 'users',
         loadChildren: () =>
           import('./views/admin/users/users-routing.module').then((m) => m.UsersRoutingModule)

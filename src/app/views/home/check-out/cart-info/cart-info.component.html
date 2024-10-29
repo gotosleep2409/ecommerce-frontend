@@ -11,5 +11,14 @@
   </ul>
 </div>
 
+<div>
+  <label for="discountCode">Discount Code:</label>
+  <input type="text" id="discountCode" [(ngModel)]="discountCode" placeholder="Enter discount code">
+  <button *ngIf="!discountApplied" (click)="applyDiscount()">Apply</button>
+</div>
+
+<div *ngIf="discountApplied">
+  <p style="color: green;">Discount code applied: {{ discountCode }} ({{ discountValue }}% off)</p>
+</div>
 <hr>
-<p>Total <span class="price" style="color:black"><b>{{calculateCartTotal() | currency : 'VND'}}</b></span></p>
+<p>Total <span class="price" style="color:black"><b>{{calculateDiscountedTotal() | currency : 'VND'}}</b></span></p>

@@ -8,6 +8,11 @@ export class CartService {
   cartItem = new BehaviorSubject<any[]>([])
   cartTotal = 0
   cartCount = 0
+  cartDiscount = {
+    code: '',
+    value: 0,
+    discountApplied: false
+  };
 
   constructor() { }
 
@@ -65,10 +70,9 @@ export class CartService {
     return totalQty
   }
 
-  calculateTotal() {
+  /*calculateTotal() {
     let total = 0
     let totalQuantity = 0
-
     this.cartItem.value.forEach(item => {
       item.sizes.forEach(size => {
         totalQuantity += size.quantity
@@ -79,6 +83,30 @@ export class CartService {
     this.removeItemsWithZeroQuantity()
     this.cartTotal = total
     this.cartCount = totalQuantity
+  }*/
+
+  calculateTotal() {
+    let total = 0;
+    let totalQuantity = 0;
+
+    this.cartItem.value.forEach(item => {
+      item.sizes.forEach(size => {
+        totalQuantity += size.quantity;
+      });
+      total += item.price * totalQuantity;
+      totalQuantity = 0;
+    });
+
+    if (this.cartDiscount && this.cartDiscount.discountApplied) {
+      const discountAmount = total * (this.cartDiscount.value / 100);
+      this.cartTotal = total - discountAmount;
+    } else {
+      this.cartTotal = total;
+    }
+
+    this.cartCount = totalQuantity;
+
+    this.removeItemsWithZeroQuantity();
   }
 
   removeProduct(item: any) {
@@ -99,5 +127,17 @@ export class CartService {
     });
 
     this.cartItem.next(updatedCartItems);
+  }
+
+  addDiscount(codeDiscount : any, valueDiscount: any){
+    const total = this.cartTotal
+    const discountAmount = total * (valueDiscount / 100)
+    this.cartTotal = total - discountAmount
+    this.cartDiscount = {
+      code: codeDiscount,
+      value: valueDiscount,
+      discountApplied: true
+    }
+    console.log(this.cartTotal, this.cartDiscount)
   }
 }

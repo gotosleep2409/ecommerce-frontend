@@ -6,6 +6,7 @@ import {NavComponent} from "../../shared/nav/nav.component";
 import {FooterComponent} from "../../shared/footer/footer.component";
 import {BillService} from "../../../../services/bill.service";
 import {CookieService} from "ngx-cookie-service";
+import {CartService} from "../../../../services/cart.service";
 
 @Component({
   selector: 'app-payment-result',
@@ -17,7 +18,7 @@ import {CookieService} from "ngx-cookie-service";
 export class PaymentResultComponent implements OnInit{
   currentDate: any
   billInfo: any
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private cartService: CartService) {
   }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class PaymentResultComponent implements OnInit{
     if(this.cookieService.get("cartInfo")){
       this.billInfo = JSON.parse(this.cookieService.get("cartInfo"))
       this.cookieService.delete("cartInfo")
+      this.cartService.clearCart()
     }
   }
 }

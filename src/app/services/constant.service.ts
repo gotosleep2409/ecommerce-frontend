@@ -11,6 +11,7 @@ export class ConstantService {
   USERS: string
   BILLS: string
   REVIEW: string
+  DISCOUNTCODE: string
 
 
   constructor() {
@@ -19,5 +20,6 @@ export class ConstantService {
     this.USERS = "users"
     this.BILLS = "bills"
     this.REVIEW = "comments"
+    this.DISCOUNTCODE = "discountCode"
   }
 }
