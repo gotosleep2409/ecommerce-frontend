@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {ConstantService} from "./constant.service";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {saveAs} from "file-saver";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,17 @@ export class BillService {
 
   createReview(data: any){
     return this.http.post(this.constantService.API_ENDPOINT + this.constantService.REVIEW + '/create', data)
+  }
+
+  exportExcelByBillID(item: any) {
+    const fileName = prompt("Nhập tên file muốn lưu:", `bill_${item.code}`);
+    const finalFileName = fileName ? fileName : 'bill_report';
+
+    return this.http.get(`${this.constantService.API_ENDPOINT}${this.constantService.BILLS}/export?billId=${item.id}`, {
+      responseType: 'blob'
+    }).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      saveAs(blob, `${finalFileName}.xlsx`);
+    });
   }
 }

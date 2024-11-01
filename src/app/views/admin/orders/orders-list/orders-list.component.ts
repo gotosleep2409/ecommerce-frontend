@@ -79,4 +79,8 @@ export class OrdersListComponent implements OnInit{
     this.currentPage = 1
     this.getList()
   }
+
+  exportExcel(item) {
+    this.billService.exportExcelByBillID(item)
+  }
 }
