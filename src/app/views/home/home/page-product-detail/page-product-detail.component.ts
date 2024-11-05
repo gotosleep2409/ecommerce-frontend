@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {ProductsService} from "../../../../services/products.service";
 import {size} from "lodash-es";
 import {CartService} from "../../../../services/cart.service";
@@ -12,7 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
   selector: 'app-page-product-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatExpansionModule, MatTabsModule],
+  imports: [CommonModule, FormsModule, MatExpansionModule, MatTabsModule, RouterLink],
   templateUrl: './page-product-detail.component.html',
   styleUrl: './page-product-detail.component.scss'
 })
@@ -30,6 +30,7 @@ export class PageProductDetailComponent {
   selectedQuantity: number = 0
   selectedSize: string
   quantity: any = 1
+  relatedProducts: any
   async ngOnInit() {
     this.router.params.subscribe((params) => {
       if (params && params['productId']) {
@@ -37,7 +38,7 @@ export class PageProductDetailComponent {
         if (this.productId != null) {
           this.productService.getProduct(Number(this.productId)).subscribe((value: any) => {
             this.productItem = value
-            console.log(this.productItem)
+            this.relatedProducts = value.relatedTo
             this.productSizesWithQuantity = Object.keys(this.productItem.sizeQuantityMap).map(key => ({ size: key, quantity: this.productItem.sizeQuantityMap[key] }));
           })
         }
@@ -86,5 +87,9 @@ export class PageProductDetailComponent {
       ...Array(halfStar).fill('half'),
       ...Array(emptyStars).fill('empty')
     ];
+  }
+
+  viewProduct(id) {
+
   }
 }

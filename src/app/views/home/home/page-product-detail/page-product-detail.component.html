@@ -1,7 +1,6 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
-
 <div class="container">
   <div class="card">
     <div class="container-fliud">
@@ -87,8 +86,32 @@
           {{ productItem.detail }}
         </mat-tab>
         <mat-tab label="Related to">
-          Content 2
+          <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+            <div class="carousel-inner">
+              <ng-container *ngFor="let product of relatedProducts; let i = index">
+                <div class="carousel-item" [class.active]="i === 0">
+                  <div class="row">
+                    <div class="col-sm-3" *ngFor="let prod of relatedProducts.slice(i * 4, (i + 1) * 4)">
+                      <div class="thumb-wrapper">
+                        <div class="img-box">
+                          <a [routerLink]="['/product/detail/', prod.id]">
+                            <img [src]="prod.imageUrl" class="img-fluid" alt="{{ prod.name }}">
+                          </a>
+                        </div>
+                        <div class="thumb-content">
+                          <h4 [routerLink]="['/product/detail/', prod.id]" >{{ prod.name }}</h4>
+                          <p class="item-price"><span>{{ prod.price | currency:'VND' }}</span></p>
+                          <!--<a (click)="AddToCart()" class="btn btn-primary">Add to Cart</a>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
         </mat-tab>
+
         <mat-tab label="Reviews({{productItem?.comments?.length}})">
           <div *ngIf="productItem?.comments?.length">
             <div *ngFor="let comment of productItem.comments" class="comment">
