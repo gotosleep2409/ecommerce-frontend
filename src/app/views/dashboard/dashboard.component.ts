@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+import {DashboardService} from "../../services/dashboard.service";
 
 interface IUser {
   name: string;
@@ -22,7 +22,7 @@ interface IUser {
   styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  constructor(private chartsData: DashboardChartsData) {
+  constructor(private chartsData: DashboardChartsData, private dashboardService: DashboardService) {
   }
 
   public users: IUser[] = [
@@ -106,17 +106,34 @@ export class DashboardComponent implements OnInit {
     }
   ];
   public mainChart: IChartProps = {};
+  public turnoverChart: IChartProps = {};
   public chart: Array<IChartProps> = [];
+  public backgroundColor: [
+    '#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED', '#36A2EB',
+    '#9966FF', '#FF9F40', '#FFCD56', '#4DC9F6', '#F67019'
+  ]
+  public chartPopularData: any
+  public chartInventoryData: any
+
   public trafficRadioGroup = new UntypedFormGroup({
     trafficRadio: new UntypedFormControl('Day')
   });
 
+  public saleRadioGroup = new UntypedFormGroup({
+    saleRadio: new UntypedFormControl('Day')
+  });
+
   ngOnInit(): void {
     this.initCharts();
+    this.getDataForChartInventoryData();
+    this.getDataForChartPopularData();
   }
 
   initCharts(): void {
+    this.getDataForChartInventoryData();
+    this.getDataForChartPopularData();
     this.mainChart = this.chartsData.mainChart;
+    this.turnoverChart = this.chartsData.turnoverChart;
     /*this.setTrafficPeriod('day');*/
   }
 
@@ -133,6 +150,19 @@ export class DashboardComponent implements OnInit {
     this.initCharts();
   }
 
+  setTurnoverTrafficPeriod(value: string): void {
+    this.turnoverChart = this.chartsData.turnoverChart;
+    this.saleRadioGroup.setValue({ saleRadio: value });
+    this.chartsData.turnoverMainChartForDay(value);
+    this.initCharts();
+  }
+
+  setTurnoverTrafficMonth(value: string): void {
+    this.saleRadioGroup.setValue({ saleRadio: value });
+    this.chartsData.turnoverMainChartForMonth(value);
+    this.initCharts();
+  }
+
   /*
   initCharts(): void {
     this.mainChart = this.chartsData.mainChart;
@@ -144,4 +174,34 @@ export class DashboardComponent implements OnInit {
     this.initCharts();
   }
   */
+
+  getDataForChartPopularData(){
+    this.dashboardService.getTop10BestSellingProducts().subscribe((res: any) => {
+      this.chartPopularData = {
+        labels: res.data.productNames,
+        datasets: [
+          {
+            data: res.data.quantities,
+            backgroundColor: ['#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED', '#36A2EB',
+              '#9966FF', '#FF9F40', '#FFCD56', '#4DC9F6', '#F67019']
+          }
+        ]
+      };
+    })
+  }
+
+  getDataForChartInventoryData(){
+    this.dashboardService.getTop10ProductByStock().subscribe((res: any) => {
+      this.chartInventoryData = {
+        labels: res.data.productNames,
+        datasets: [
+          {
+            data: res.data.stockQuantities,
+            backgroundColor: ['#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED', '#36A2EB',
+              '#9966FF', '#FF9F40', '#FFCD56', '#4DC9F6', '#F67019']
+          }
+        ]
+      };
+    })
+  }
 }

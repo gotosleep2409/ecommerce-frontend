@@ -11,4 +11,17 @@ export class DashboardService{
   getDataChartForDashboard(period: any){
     return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/chart-data?period=${period}`)
   }
+
+  getDataTurnoverChartForDashboard(period: any){
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/chart-turnover-data?period=${period}`)
+  }
+
+  getTop10BestSellingProducts(){
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.BILLS + `/chart-top10-products`)
+  }
+
+  getTop10ProductByStock(){
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + `/chart-top-products-by-stock`)
+  }
+
 }

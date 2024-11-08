@@ -19,14 +19,16 @@ export interface IChartProps {
 export class DashboardChartsData {
   constructor(private dashboardService: DashboardService) {
     this.initMainChart();
+    this.turnoverMainChart();
   }
 
   public mainChart: IChartProps = {};
+  public turnoverChart : IChartProps = {};
 
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-
+  // Chart số lượng sản phẩm bán được
   initMainChartForMonth(period: string = 'month'){
     this.dashboardService.getDataChartForDashboard(period).subscribe((res: any) => {
       const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
@@ -416,6 +418,399 @@ export class DashboardChartsData {
           labels
         };*/
     this.initMainChartForDay('day')
+  }
+
+  // Chart doanh thu
+  turnoverMainChartForMonth(period: string = 'month'){
+    this.dashboardService.getDataTurnoverChartForDashboard(period).subscribe((res: any) => {
+      console.log(res)
+      const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
+      const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+      const brandInfoBg = hexToRgba(brandInfo, 10);
+      const brandDanger = getStyle('--cui-danger') || '#f86c6b';
+
+      const datasets = res.data.datasets.map((dataset: any, index: number) => {
+        const colors = [
+          {
+            backgroundColor: brandInfoBg,
+            borderColor: brandInfo,
+            pointHoverBackgroundColor: brandInfo,
+            borderWidth: 2,
+            fill: true
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandSuccess,
+            pointHoverBackgroundColor: '#fff'
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandDanger,
+            pointHoverBackgroundColor: brandDanger,
+            borderWidth: 1,
+            borderDash: [8, 5]
+          }
+        ];
+        return {
+          ...dataset,
+          ...colors[index]
+        };
+      });
+
+      /*const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function (context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };*/
+
+      /*const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: 10,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: Math.ceil(250 / 5)
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };*/
+
+      const allData = datasets.flatMap((dataset: any) => dataset.data);
+      const maxData = Math.max(...allData);
+      const stepSize = Math.ceil(maxData / 5);
+
+      const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function(context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };
+
+      const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: maxData + 5,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: stepSize
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };
+
+      this.turnoverChart.type = 'line';
+      this.turnoverChart.options = options;
+      this.turnoverChart.data = {
+        datasets,
+        labels: res.data.labels
+      }
+    })
+  }
+
+  turnoverMainChartForDay(period: string = 'day'){
+    this.dashboardService.getDataTurnoverChartForDashboard(period).subscribe((res: any) => {
+      const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
+      const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+      const brandInfoBg = hexToRgba(brandInfo, 10);
+      const brandDanger = getStyle('--cui-danger') || '#f86c6b';
+
+
+      const datasets = res.data.datasets.map((dataset: any, index: number) => {
+        const colors = [
+          {
+            backgroundColor: brandInfoBg,
+            borderColor: brandInfo,
+            pointHoverBackgroundColor: brandInfo,
+            borderWidth: 2,
+            fill: true
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandSuccess,
+            pointHoverBackgroundColor: '#fff'
+          },
+          {
+            backgroundColor: 'transparent',
+            borderColor: brandDanger,
+            pointHoverBackgroundColor: brandDanger,
+            borderWidth: 1,
+            borderDash: [8, 5]
+          }
+        ];
+        return {
+          ...dataset,
+          ...colors[index]
+        };
+      });
+
+      const allData = datasets.flatMap((dataset: any) => dataset.data);
+      const maxData = Math.max(...allData);
+      const stepSize = Math.ceil(maxData / 5);
+
+      const plugins = {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          callbacks: {
+            labelColor: function(context: any) {
+              return {
+                backgroundColor: context.dataset.borderColor
+              };
+            }
+          }
+        }
+      };
+
+      const options = {
+        maintainAspectRatio: false,
+        plugins,
+        scales: {
+          x: {
+            grid: {
+              drawOnChartArea: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            max: maxData + 5,
+            ticks: {
+              maxTicksLimit: 5,
+              stepSize: stepSize
+            }
+          }
+        },
+        elements: {
+          line: {
+            tension: 0.4
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 4,
+            hoverBorderWidth: 3
+          }
+        }
+      };
+
+      this.turnoverChart.type = 'line';
+      this.turnoverChart.options = options;
+      this.turnoverChart.data = {
+        datasets,
+        labels: res.data.labels
+      }
+    })
+  }
+
+  turnoverMainChart(period: string = 'Month') {
+    const brandSuccess = getStyle('--cui-success') ?? '#4dbd74';
+    const brandInfo = getStyle('--cui-info') ?? '#20a8d8';
+    const brandInfoBg = hexToRgba(brandInfo, 10);
+    const brandDanger = getStyle('--cui-danger') || '#f86c6b';
+
+    // mainChart
+    // mainChart
+    this.turnoverChart['elements'] = period === 'Month' ? 12 : 27;
+    this.turnoverChart['Data1'] = [];
+    this.turnoverChart['Data2'] = [];
+    this.turnoverChart['Data3'] = [];
+
+    // generate random values for mainChart
+    for (let i = 0; i <= this.turnoverChart['elements']; i++) {
+      this.turnoverChart['Data1'].push(this.random(50, 240));
+      this.turnoverChart['Data2'].push(this.random(20, 160));
+      this.turnoverChart['Data3'].push(65);
+    }
+
+    let labels: string[] = [];
+    if (period === 'Month') {
+      labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+    } else {
+      /* tslint:disable:max-line-length */
+      const week = [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ];
+      labels = week.concat(week, week, week);
+    }
+
+    const colors = [
+      {
+        // brandInfo
+        backgroundColor: brandInfoBg,
+        borderColor: brandInfo,
+        pointHoverBackgroundColor: brandInfo,
+        borderWidth: 2,
+        fill: true
+      },
+      {
+        // brandSuccess
+        backgroundColor: 'transparent',
+        borderColor: brandSuccess || '#4dbd74',
+        pointHoverBackgroundColor: '#fff'
+      },
+      {
+        // brandDanger
+        backgroundColor: 'transparent',
+        borderColor: brandDanger || '#f86c6b',
+        pointHoverBackgroundColor: brandDanger,
+        borderWidth: 1,
+        borderDash: [8, 5]
+      }
+    ];
+
+    const datasets = [
+      {
+        data: this.turnoverChart['Data1'],
+        label: 'Current',
+        ...colors[0]
+      },
+      {
+        data: this.turnoverChart['Data2'],
+        label: 'Previous',
+        ...colors[1]
+      },
+      {
+        data: this.turnoverChart['Data3'],
+        label: 'BEP',
+        ...colors[2]
+      }
+    ];
+
+    const plugins = {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          labelColor: function(context: any) {
+            return {
+              backgroundColor: context.dataset.borderColor
+            };
+          }
+        }
+      }
+    };
+
+    const options = {
+      maintainAspectRatio: false,
+      plugins,
+      scales: {
+        x: {
+          grid: {
+            drawOnChartArea: false
+          }
+        },
+        y: {
+          beginAtZero: true,
+          max: 250,
+          ticks: {
+            maxTicksLimit: 5,
+            stepSize: Math.ceil(250 / 5)
+          }
+        }
+      },
+      elements: {
+        line: {
+          tension: 0.4
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3
+        }
+      }
+    };
+
+    this.turnoverChart.type = 'line';
+    this.turnoverChart.options = options;
+    this.dashboardService.getDataTurnoverChartForDashboard(period).subscribe((res: any) => {
+      const labels = res.data.labels;
+      const datasetsFromApi = res.data.datasets;
+      this.turnoverChart.data = {
+        datasetsFromApi,
+        labels
+      };
+    })
+    /*this.mainChart.data = {
+          datasets,
+          labels
+        };*/
+    this.turnoverMainChartForDay('day')
   }
 
 }

@@ -1,10 +1,10 @@
-<app-widgets-dropdown></app-widgets-dropdown>
+<!--<app-widgets-dropdown></app-widgets-dropdown>-->
 <c-card class="mb-4">
   <c-card-body>
     <c-row>
       <c-col sm="5">
-        <h4 class="card-title mb-0" id="traffic">Traffic</h4>
-        <div class="small text-medium-emphasis">January - December 2021</div>
+        <h4 class="card-title mb-0" id="traffic">Số đơn hàng</h4>
+        <div class="small text-medium-emphasis">2024</div>
       </c-col>
       <c-col class="d-none d-md-block" sm="7">
         <button cButton class="float-end" color="primary">
@@ -109,6 +109,124 @@
 </c-card>
 
 <!--<app-widgets-brand [withCharts]="true"></app-widgets-brand>-->
+
+<c-card class="mb-4">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-0" id="Sales">Doanh số</h4>
+        <div class="small text-medium-emphasis">2024</div>
+      </c-col>
+      <c-col class="d-none d-md-block" sm="7">
+        <button cButton class="float-end" color="primary">
+          <svg cIcon name="cilCloudDownload"></svg>
+        </button>
+        <form [formGroup]="saleRadioGroup">
+          <c-button-group class="float-end me-3" role="group">
+            <input
+              class="btn-check"
+              formControlName="saleRadio"
+              type="radio"
+              value="Day"
+            />
+            <label
+              (click)="setTurnoverTrafficPeriod('Day')"
+              cButton
+              cFormCheckLabel
+              color="secondary"
+              variant="outline"
+            >Day</label>
+
+            <input
+              class="btn-check"
+              formControlName="saleRadio"
+              type="radio"
+              value="Month"
+            />
+            <label
+              (click)="setTurnoverTrafficMonth('Month')"
+              cButton
+              cFormCheckLabel
+              color="secondary"
+              variant="outline"
+            >Month</label>
+          </c-button-group>
+        </form>
+      </c-col>
+    </c-row>
+    <c-chart
+      [data]="turnoverChart.data"
+      [height]="300"
+      [ngStyle]="{ 'marginTop.px': 40 }"
+      [options]="turnoverChart.options"
+      [type]="turnoverChart.type"
+    >
+      Turnover chart
+    </c-chart>
+  </c-card-body>
+  <!--<c-card-footer>
+    <c-row class="text-center" [md]="5" [xs]="1">
+      <c-col class="mb-sm-2 mb-0">
+        <div class="text-medium-emphasis">Visits</div>
+        <strong>29.703 Users (40%)</strong>
+        <c-progress class="mt-2" thin>
+          <c-progress-bar color="success" value="40"></c-progress-bar>
+        </c-progress>
+      </c-col>
+      <c-col class="mb-sm-2 mb-0">
+        <div class="text-medium-emphasis">Unique</div>
+        <strong>24.093 Users (20%)</strong>
+        <c-progress class="mt-2" thin>
+          <c-progress-bar color="info" value="20"></c-progress-bar>
+        </c-progress>
+      </c-col>
+      <c-col class="mb-sm-2 mb-0">
+        <div class="text-medium-emphasis">Page views</div>
+        <strong>78.706 Views (60%)</strong>
+        <c-progress class="mt-2" thin>
+          <c-progress-bar color="warning" value="60"></c-progress-bar>
+        </c-progress>
+      </c-col>
+      <c-col class="mb-sm-2 mb-0">
+        <div class="text-medium-emphasis">New Users</div>
+        <strong>22.123 Users (80%)</strong>
+        <c-progress class="mt-2" thin>
+          <c-progress-bar color="danger" value="80"></c-progress-bar>
+        </c-progress>
+      </c-col>
+      <c-col class="mb-sm-2 mb-0">
+        <div class="text-medium-emphasis">Bounce Rate</div>
+        <strong>Average Rate (40.15%)</strong>
+        <c-progress class="mt-2" thin>
+          <c-progress-bar value="40"></c-progress-bar>
+        </c-progress>
+      </c-col>
+    </c-row>
+  </c-card-footer>-->
+</c-card>
+
+<c-row>
+  <c-col xs="12" lg="6">
+    <c-card class="mb-4">
+      <c-card-header>
+        Top 10 sản phẩm bán chạy
+      </c-card-header>
+      <c-card-body>
+        <c-chart type="polarArea" [data]="chartPopularData"></c-chart>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col xs="12" lg="6">
+    <c-card class="mb-4">
+      <c-card-header>
+        Top 10 sản phẩm tồn kho nhiều nhất
+      </c-card-header>
+      <c-card-body>
+        <c-chart type="pie" [data]="chartInventoryData"></c-chart>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
 
 <!--<c-row>
   <c-col xs>
@@ -246,7 +364,7 @@
             </div>
           </c-col>
 
-          <c-col md="6" xl="6" xs="12">
+          &lt;!&ndash;<c-col md="6" xl="6" xs="12">
             <c-row>
               <c-col sm="6">
                 <div class="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
@@ -356,7 +474,7 @@
                 <svg cIcon name="cil-options"></svg>
               </button>
             </div>
-          </c-col>
+          </c-col>&ndash;&gt;
         </c-row>
       </c-card-body>
     </c-card>
