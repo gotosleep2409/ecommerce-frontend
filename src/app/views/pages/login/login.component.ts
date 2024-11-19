@@ -52,4 +52,7 @@ export class LoginComponent {
     this.router.navigate(['/register']);
   }
 
+  onClickForgotPassword() {
+    this.router.navigate(['/forgetPassword']);
+  }
 }

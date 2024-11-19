@@ -33,4 +33,8 @@ export class UsersService {
   getUserById(id:number){
     return this.http.get(this.constantService.API_ENDPOINT + this.constantService.USERS + `/${id}`)
   }
+
+  forgotPassword(data: any): Observable<any>{
+    return this.http.post(this.constantService.API_ENDPOINT + this.constantService.USERS + `/reset-password`, data)
+  }
 }
