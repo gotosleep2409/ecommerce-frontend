@@ -42,6 +42,7 @@ export class LoginComponent {
           }
         },
         error: (err: any) => {
+          this.snackBar.open("Invalid username or password!")
           console.error(err)
         }
       })
