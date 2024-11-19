@@ -13,4 +13,8 @@ export class RegisterService {
   register(data: any): Observable<any> {
     return this.http.post(this.constantService.API_ENDPOINT + this.constantService.USERS + "/register", data)
   }
+
+  verifyEmail(code: string): Observable<string> {
+    return this.http.get<string>(this.constantService.API_ENDPOINT + this.constantService.USERS + "/verify", { params: { code } });
+  }
 }
