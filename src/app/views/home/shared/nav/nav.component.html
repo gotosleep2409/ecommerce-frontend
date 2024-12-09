@@ -6,14 +6,20 @@
   </h5>
 
   <nav class="d-inline-flex mt-2 mt-md-0 mx-auto fs-4" style="text-transform: uppercase">
-    <a class="me-3 py-2 text-decoration-none nav-link" [routerLink]= "['/home']">Home</a>
-    <a class="me-3 py-2 text-decoration-none nav-link" [routerLink]= "['/product/all']">Product</a>
-    <a class="me-3 py-2 text-decoration-none nav-link" href="#">Support</a>
-    <a class="py-2 text-decoration-none nav-link" href="#">Contact</a>
+    <a class="me-3 py-2 text-decoration-none nav-link" [routerLink]= "['/home']">Trang chủ</a>
+    <a class="me-3 py-2 text-decoration-none nav-link" [routerLink]= "['/product/all']">Sản phẩm</a>
+    <a class="me-3 py-2 text-decoration-none nav-link" [routerLink]= "['/home']">Hỗ trợ</a>
+    <a class="py-2 text-decoration-none nav-link" [routerLink]= "['/home']">Liên hệ</a>
   </nav>
+
+  <div class="input-group mx-4" style="width: 300px;">
+    <input type="text" class="form-control" placeholder="Tìm kiếm..." [(ngModel)]="searchQuery" (keydown.enter)="onSearch()" />
+    <button class="btn btn-primary" type="button" (click)="onSearch()">Tìm kiếm</button>
+  </div>
+
   <i class="fa" style="margin-left: 40px; font-size:24px" (click)="viewDetailCart()">&#xf07a;</i>
   <span class='badge badge-warning' id='lblCartCount'> {{countCart}} </span>
-  <a *ngIf="!isLoggedIn" style="margin-left: 40px; margin-right: 50px" class="btn btn-outline-primary" [routerLink]= "['/login']">Sign up</a>
+  <a *ngIf="!isLoggedIn" style="margin-left: 40px; margin-right: 50px" class="btn btn-outline-primary" [routerLink]= "['/login']">Đăng nhập</a>
   <div *ngIf="isLoggedIn" style="margin-left: 40px; margin-right: 50px">
     <c-dropdown>
       <button cButton cDropdownToggle color="secondary" >
@@ -22,7 +28,7 @@
       <ul cDropdownMenu>
         <li><button (click)="viewDetailUser()" cDropdownItem>Hồ sơ cá nhân</button></li>
         <li><button (click)="viewTransactionHistory()" cDropdownItem>Lịch sử đơn hàng</button></li>
-        <li><button (click)="logout()" cDropdownItem>Log Out</button></li>
+        <li><button (click)="logout()" cDropdownItem>Đăng xuất</button></li>
       </ul>
     </c-dropdown>
   </div>

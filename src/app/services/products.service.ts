@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ConstantService} from "./constant.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { saveAs } from 'file-saver';
 
@@ -26,6 +26,14 @@ export class ProductsService {
       ].join('')
       return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/list?" + params)
     }
+  }
+
+  getListByPageForHomePage(params: any) {
+    const httpParams = new HttpParams({ fromObject: params });
+    return this.http.get(
+      this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/list-for-home-page",
+      { params: httpParams }
+    );
   }
 
   addProduct(data: any): Observable<any> {

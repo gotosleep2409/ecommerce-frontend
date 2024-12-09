@@ -1,22 +1,43 @@
 <div class="card filters">
   <div class="card-header">
-    <strong>Filters</strong>
+    <strong>Bộ lọc</strong>
   </div>
 
   <div class="card-body">
-    <form>
+    <form (ngSubmit)="applyFilters()">
       <div class="form-group">
-        <label for="form"> From </label>
-        <input type="number" id="form" class="form-control">
+        <label>Giá</label>
+        <input type="range"
+               min="0"
+               max="10000000"
+               [(ngModel)]="to"
+               name="to"
+               id="toRange"
+               class="form-control-range"
+               style="width: 100%"
+               (input)="updateRange()" />
+        <div class="d-flex justify-content-between">
+          <span>{{ formatCurrency(from) }}</span>
+          <span>{{ formatCurrency(to) }}</span>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="to"> To </label>
-        <input type="number" id="to" class="form-control">
+        <label>Danh mục</label>
+        <div *ngFor="let category of categories">
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm m-1"
+            [class.active]="selectedCategory && selectedCategory.id === category.id"
+            (click)="toggleCategory(category)">
+            {{ category.name }}
+          </button>
+        </div>
       </div>
+
       <br>
-      <button class="btn btn-primary btn-block"> Filter by Price</button>
+      <button class="btn btn-primary btn-block" type="submit">Filter</button>
     </form>
-
   </div>
 </div>
+

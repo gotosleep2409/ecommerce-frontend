@@ -4,7 +4,7 @@ import {CartService} from "../../../../services/cart.service";
 import {CategoriesDetailComponent} from "../../../admin/categories/categories-detail/categories-detail.component";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {CartDetailComponent} from "./cart-detail/cart-detail.component";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {TokenStorageService} from "../../../../services/token-storage.service";
 import {NgIf} from "@angular/common";
 import {
@@ -16,6 +16,7 @@ import {
 } from "@coreui/angular";
 import {TransactionHistoryComponent} from "../header/transaction-history/transaction-history.component";
 import {DetailUserComponent} from "../header/detail-user/detail-user.component";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-nav',
@@ -28,7 +29,8 @@ import {DetailUserComponent} from "../header/detail-user/detail-user.component";
     DropdownToggleDirective,
     ButtonDirective,
     DropdownMenuDirective,
-    DropdownItemDirective
+    DropdownItemDirective,
+    FormsModule
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
@@ -39,11 +41,23 @@ export class NavComponent implements OnInit{
   isLoggedIn: any
   role: any
   username: any
+  searchQuery: string = ''
 
-  constructor(private cartService : CartService, private dialog: MatDialog, private tokenStorageService: TokenStorageService) {
+  constructor(private cartService : CartService, private dialog: MatDialog, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) {
+  }
+
+  onSearch() {
+    this.router.navigate(['/product/all'], {
+      queryParams: { search: this.searchQuery },
+      queryParamsHandling: 'merge',
+    });
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchQuery = params['search'] || ''
+    })
+
     this.isLoggedIn = !!this.tokenStorageService.getToken()
     if(this.isLoggedIn){
       const user = this.tokenStorageService.getUser()

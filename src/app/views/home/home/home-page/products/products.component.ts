@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ProductItemComponent} from "./product-item/product-item.component";
 import {ProductsService} from "../../../../../services/products.service";
-import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -12,33 +11,59 @@ import {ActivatedRoute} from "@angular/router";
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductsComponent implements OnInit{
+export class ProductsComponent implements OnInit, OnChanges{
   productList: any = []
   productId: string = null
-  constructor(private productService: ProductsService, private httpClient: HttpClient,private router: ActivatedRoute) {
+  @Input() filters: { from: number | null; to: number | null; category: any | null } = { from: null, to: null, category: null }
+  searchQuery: string = null
+
+  constructor(private productService: ProductsService,private router: ActivatedRoute) {
+    this.router.queryParams.subscribe(params => {
+      this.searchQuery = params['search'] || null
+      this.getList()
+    })
   }
-  /*ngOnInit() {
-    this.getList()
-  }*/
 
   async ngOnInit() {
     this.router.params.subscribe((params) => {
       if (params && params['categoryId']) {
         this.productId = params['categoryId']
+        this.searchQuery = params['search'] || null
       }
       this.getList()
     })
+
+    this.router.queryParams.subscribe(params => {
+      this.searchQuery = params['search'] || null
+      this.getList()
+    })
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['filters']) {
+      this.getList()
+    }
+  }
+
   getList() {
-    if(this.productId != null){
-      this.productService.getListByPage(1,12, this.productId).subscribe((response: any) => {
-        this.productList = response.data.content
-      })
+    const params: any = {
+      page: 1,
+      size: 12,
+      productId: this.productId || null,
+      from: this.filters?.from || null,
+      to: this.filters?.to || null,
+      category: this.filters?.category?.id || null,
+      search: this.searchQuery || null
     }
-    else {
-      this.productService.getListByPage(1,12).subscribe((response: any) => {
-        this.productList = response.data.content
-      })
-    }
+
+    Object.keys(params).forEach(key => {
+      if (params[key] === null) {
+        delete params[key]
+      }
+    })
+
+    this.productService.getListByPageForHomePage(params).subscribe((response: any) => {
+      this.productList = response.data.content
+    })
   }
 }

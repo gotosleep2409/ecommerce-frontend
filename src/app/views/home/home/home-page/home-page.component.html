@@ -4,11 +4,11 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <app-filters></app-filters>
+            <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
           </div>
 
           <div class="col-md-8">
-            <app-products></app-products>
+            <app-products [filters]="selectedFilters"></app-products>
           </div>
 
           <div class="col">
@@ -16,10 +16,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
     </div>
   </div>
 </div>

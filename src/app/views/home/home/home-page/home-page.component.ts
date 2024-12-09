@@ -12,5 +12,9 @@ import {CartComponent} from "./cart/cart.component";
   styleUrl: './home-page.component.scss'
 })
 export class HomePageComponent {
+  selectedFilters: { from: number | null; to: number | null; category: number | null } = { from: null, to: null, category: null };
 
+  onFiltersChanged(filters: { from: number | null; to: number | null; category: any | null }) {
+    this.selectedFilters = filters;
+  }
 }
