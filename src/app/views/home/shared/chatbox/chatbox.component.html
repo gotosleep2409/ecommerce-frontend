@@ -1,0 +1,29 @@
+<button class="chat-button" (click)="toggleChatbox()">
+  <i class="fas fa-comment-alt"></i>
+</button>
+
+<div class="chatbox" [class.hidden]="!isChatboxOpen">
+  <div class="chat-header">
+    <span>Chat with us</span>
+    <button class="close-chat" (click)="toggleChatbox()">X</button>
+  </div>
+  <div class="chat-body">
+    <ul>
+      <li *ngFor="let faq of faqs" (click)="sendQuestion(faq)">
+        <button class="faq-button">{{ faq }}</button>
+      </li>
+    </ul>
+    <div class="messages">
+      <div *ngFor="let message of messages" class="message" [ngClass]="{ user: message.sender === 'You', bot: message.sender === 'Admin' }">
+        <span>{{message.sender}}: {{ message.text }}</span>
+      </div>
+    </div>
+    <input
+      type="text"
+      [(ngModel)]="chatInput"
+      (keypress)="onKeyPress($event)"
+      placeholder="Type a message..."
+    />
+    <button class="send-button" (click)="sendMessage()">Send</button>
+  </div>
+</div>

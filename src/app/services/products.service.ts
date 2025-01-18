@@ -100,4 +100,8 @@ export class ProductsService {
         saveAs(blob, `${finalFileName}.xlsx`)
       })
   }
+
+  getListByPageForPrimaryPage() {
+    return this.http.get(this.constantService.API_ENDPOINT + this.constantService.PRODUCTS + "/featured-products");
+  }
 }

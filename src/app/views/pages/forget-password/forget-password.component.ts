@@ -28,6 +28,7 @@ export class ForgetPasswordComponent {
 
   onSubmit() {
     if (this.forgetPasswordForm.valid) {
+      console.log(this.forgetPasswordForm.value)
       this.userService.forgotPassword(this.forgetPasswordForm.value).subscribe({
         next: (val: any) => {
           this.snackBar.open("Mật khẩu mới đã được gửi về email của bạn");

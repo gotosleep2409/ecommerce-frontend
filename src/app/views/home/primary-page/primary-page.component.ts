@@ -6,20 +6,25 @@ import {BannerComponent} from "../shared/banner/banner.component";
 import {CardCategoriesComponent} from "./card-categories/card-categories.component";
 import {CategoriesService} from "../../../services/categories.service";
 import {CardProductsComponent} from "./card-products/card-products.component";
+import {ChatboxComponent} from "../shared/chatbox/chatbox.component";
+import {ProductsService} from "../../../services/products.service";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-primary-page',
   standalone: true,
-  imports: [CommonModule, NavComponent, FooterComponent, BannerComponent, CardCategoriesComponent, CardProductsComponent],
+  imports: [CommonModule, NavComponent, FooterComponent, BannerComponent, CardCategoriesComponent, CardProductsComponent, ChatboxComponent, RouterLink],
   templateUrl: './primary-page.component.html',
   styleUrl: './primary-page.component.scss'
 })
 export class PrimaryPageComponent implements OnInit{
   categoriesList: any = []
-  constructor(private categoriesService: CategoriesService) {
+  featuredProducts: any
+  constructor(private categoriesService: CategoriesService, private productService: ProductsService) {
   }
   ngOnInit() {
     this.getList()
+    this.getFeaturedProducts();
   }
 
   getList() {
@@ -28,5 +33,16 @@ export class PrimaryPageComponent implements OnInit{
     }, (error: any) => {
       console.log(error)
     })
+  }
+  getFeaturedProducts(): void {
+    this.productService.getListByPageForPrimaryPage().subscribe({
+        next: (response: any) => {
+          this.featuredProducts = response.data
+          console.log(this.featuredProducts)
+        },
+        error: (err) => {
+          console.error('Error fetching featured products', err);
+        }
+      })
   }
 }

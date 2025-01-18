@@ -1,10 +1,29 @@
 <app-nav></app-nav>
 <app-banner></app-banner>
-<hr>
-<div class="cf-title-04">
-  <h1>Product Categories</h1>
-</div>
+<br>
 
+<!--<div class="discount">
+  <div class="discount-box">
+    <h3>20% Off On Tank Tops</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.</p>
+    <button class="button-discount">shop now</button>
+  </div>
+
+  <div class="discount-box">
+    <h3>Latest Eyewear For You</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.​</p>
+    <button class="button-discount">shop now</button>
+  </div>
+
+  <div class="discount-box">
+    <h3>Let's Lorem Suit Up!</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.</p>
+    <button class="button-discount">check out</button>
+  </div>
+</div>-->
+<!---discount ----->
+
+<!--
 <div class="container">
   <br>
   <div class="row">
@@ -17,6 +36,53 @@
     <app-card-products *ngFor="let category of categoriesList" [categoryItem]="category"></app-card-products>
   </div>
 </div>
+-->
 
+<div class="featured-products">
+  <h2>Sản phẩm nổi bật</h2>
+  <div class="products-container">
+    <div class="product-card" *ngFor="let product of featuredProducts">
+      <a [routerLink]="['/product/detail/', product.id]" class="product-link">
+        <img [src]="product.imageUrl || 'https://via.placeholder.com/200x150'" [alt]="product.name" />
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p *ngIf="product.priceSale">
+          <span class="old-price">{{ product.price | currency : 'VND' }}</span>
+          <span class="new-price">{{ product.priceSale | currency : 'VND' }}</span>
+        </p>
+        <p *ngIf="!product.priceSale">
+          {{ product.price | currency : 'VND' }}
+        </p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="info">
+  <div class="info-section">
+    <img src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/globe-free-img.png">
+    <h3>Giao hàng toàn quốc</h3>
+  </div>
+  <div class="info-section">
+    <img src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/quality-free-img.png">
+    <h3>Chất lượng tốt nhất</h3>
+  </div>
+  <div class="info-section">
+    <img src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/tag-free-img.png">
+    <h3>Giá tốt nhất</h3>
+  </div>
+  <div class="info-section">
+    <img src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/lock-free-img.png">
+    <h3>Thanh toán bảo mật</h3>
+  </div>
+</div>
+<!---- info ---->
+
+<!--<app-chatbox></app-chatbox>-->
 <app-footer></app-footer>
 
+<script src="https://app.tudongchat.com/js/chatbox.js"></script>
+<script>
+  const tudong_chatbox = new TuDongChat('tV917Ij2DUxrUJL37jFGi')
+  tudong_chatbox.initial()
+</script>

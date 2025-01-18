@@ -22,3 +22,271 @@
   background-color: #777;
 }
 
+.discount {
+  padding: 0 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Evenly distribute columns */
+  gap: 20px;
+  padding-bottom: 100px;
+}
+
+.discount .discount-box {
+  background: #eee;
+  color: white;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 25px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discount .discount-box:hover {
+  transform: translateY(-10px); /* Lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+.discount .discount-box:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Adjust alpha for clarity */
+  z-index: 0;
+}
+
+.discount .discount-box:nth-child(1),
+.discount .discount-box:nth-child(2),
+.discount .discount-box:nth-child(3) {
+  background-size: cover;
+  background-position: center;
+}
+
+.discount .discount-box:nth-child(1){
+  background:url('https://images.bewakoof.com/uploads/grid/app/types-of-shirts-for-men-bewakoof-blog-5-1610963789.jpg');
+}
+
+.discount .discount-box:nth-child(2){
+  background:url('https://images.bewakoof.com/uploads/grid/app/types-of-shirts-for-men-bewakoof-blog-5-1610963789.jpg');
+}
+
+.discount .discount-box:nth-child(3){
+  background:url('https://images.bewakoof.com/uploads/grid/app/types-of-shirts-for-men-bewakoof-blog-5-1610963789.jpg');
+}
+
+.discount .discount-box > h3,
+.discount .discount-box > p,
+.discount .discount-box > button {
+  position: relative;
+  z-index: 1; /* Above :before */
+}
+
+.discount .discount-box > h3 {
+  font-size: 1.3em;
+  text-transform: capitalize;
+}
+
+.discount .discount-box > p {
+  font-size: 0.9em;
+  margin: 15px 0;
+}
+
+.discount .discount-box > button {
+  border: none;
+  outline: none;
+  width: 120px;
+  text-transform: uppercase;
+  padding: 10px 0;
+  cursor: pointer;
+  font-weight: 700;
+  background: white;
+  color: black;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.discount .discount-box > button:hover {
+  background: black;
+  color: white;
+}
+
+.button-discount {
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-discount:hover {
+  background-color: #e65c50;
+  transform: scale(1.05);
+}
+
+.button-discount:active {
+  background-color: #d94c40;
+  transform: scale(0.95);
+}
+
+.featured-products {
+  padding: 20px;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+
+.featured-products h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.featured-products h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #007bff;
+  margin: 10px auto 0;
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+}
+
+.product-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.product-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.product-card .old-price {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.product-card .new-price {
+  color: #e63946;
+  font-weight: bold;
+}
+
+.product-card .sale-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e63946;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+}
+
+.stars {
+  color: gold;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .products-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .product-card {
+    padding: 10px;
+  }
+
+  .product-card h3 {
+    font-size: 16px;
+  }
+
+  .info {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-section {
+    max-width: 100%;
+  }
+}
+
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 200px;
+  background-color: #f8f8f8;
+  text-align: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.info-section {
+  flex: 1;
+  max-width: 220px; /* Đảm bảo kích thước đồng nhất */
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.info-section img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.info-section h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.info-section p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+}
